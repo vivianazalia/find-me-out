@@ -1,2 +1,2 @@
-# find-me-out
+# Find Me Out!
 ##### WPG 5 Project
