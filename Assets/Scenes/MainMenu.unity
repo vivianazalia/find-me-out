@@ -1802,8 +1802,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 723046755}
+  - component: {fileID: 723046756}
   m_Layer: 0
-  m_Name: JoinRoom
+  m_Name: InputCodeRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1816,19 +1817,35 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723046754}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1566029793}
-  m_Father: {fileID: 753323944}
-  m_RootOrder: 6
+  m_Father: {fileID: 1898475916}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &723046756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723046754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ef361e34d2d1f458127d0f669031bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkManager: {fileID: 1369758512}
+  joinModePanel: {fileID: 1898475915}
+  inputCodeRoom: {fileID: 1127885354}
+  joinButton: {fileID: 1107879330}
 --- !u!1 &753323943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,7 +1882,6 @@ RectTransform:
   - {fileID: 717700544}
   - {fileID: 1898475916}
   - {fileID: 479588912}
-  - {fileID: 723046755}
   m_Father: {fileID: 1794094594}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2767,6 +2783,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 242401600}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1102236835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2887,7 +2915,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1107879331}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 723046756}
+        m_TargetAssemblyTypeName: JoinLobbyMenu, Assembly-CSharp
+        m_MethodName: JoinLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1107879331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3378,10 +3418,11 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 6717909679473659220, guid: b2180955396307b4f96a4c6491f632b9, type: 3}
+  playerPrefab: {fileID: 1824835721325325177, guid: 1de5c30343ea4a4409fc3e4f5be8446e, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
+  minPlayer: 2
   menuScene: Assets/Scenes/MainMenu.unity
   roomLobbyPrefabs: {fileID: 5467565025469644905, guid: b2180955396307b4f96a4c6491f632b9, type: 3}
 --- !u!4 &1369758513
@@ -3729,6 +3770,7 @@ RectTransform:
   m_Children:
   - {fileID: 1102236833}
   - {fileID: 2084350990}
+  - {fileID: 723046755}
   m_Father: {fileID: 753323944}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3856,7 +3898,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2084350992}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 723046754}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &2084350992
 MonoBehaviour:
   m_ObjectHideFlags: 0

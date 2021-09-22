@@ -34,15 +34,9 @@ public class PlayerInputName : MonoBehaviour
         DisplayName = inputField.text;
         PlayerPrefs.SetString(playerPrefsNameKey, DisplayName);
     }
-    // Start is called before the first frame update
+   
     void Start()
     {
         SetUpInputField();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

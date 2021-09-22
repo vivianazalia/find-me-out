@@ -12,14 +12,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject panelInputName;
     [SerializeField] private GameObject panelJoinGame;
 
-    private void Start()
-    {
-        if (!PlayerPrefs.HasKey(firstRunAppKey))
-        {
-            PlayerPrefs.SetInt(firstRunAppKey, 1);
-        }
-    }
-
     public void StartGame()
     {
         if (PlayerPrefs.HasKey(firstRunAppKey))
@@ -29,12 +21,14 @@ public class MainMenu : MonoBehaviour
         else
         {
             panelInputName.SetActive(true);
+            PlayerPrefs.SetInt(firstRunAppKey, 1);
         }
     }
 
     public void HostLobby()
     {
         networkManager.StartHost();
+        Debug.Log("Host address : " + networkManager.networkAddress);
     }
 
 }
