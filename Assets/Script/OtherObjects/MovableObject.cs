@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovableObject : MonoBehaviour
+public class MovableObject : MonoBehaviour //Ini yang buat koin dilempar
 {
     // Start is called before the first frame update
     void Start()
