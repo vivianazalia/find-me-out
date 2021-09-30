@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int lives = 2;
-    public List<Skill> skills = new List<Skill>(); 
-    public enum Role
+    public List<Skill> skills = new List<Skill>();
+
+
+    [SerializeField] PlayerSettings playerSettings; //Di set di inspector
+    IPlayerInput playerInput;
+    PlayerMovement playerMovement;
+
+    private void Awake()
     {
-        Unassigned,
-        Hider,
-        Seeker,
-        Ghost
+        // TODO: Buat class KeyboardInput yg memakai IPlayerInput. AiInput gausah
+        // playerInput = playerSettings.IsAI ? new AiInput() as IPlayerInput : new KeyboardInput() as IPlayerInput;
+        playerInput = new KeyboardInput();
+        playerMovement = new PlayerMovement(playerInput, transform, playerSettings);
     }
-    public Role role = Role.Unassigned;
 
     public void UseSkill(char c)
     {
