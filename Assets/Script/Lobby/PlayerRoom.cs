@@ -36,4 +36,16 @@ public class PlayerRoom : NetworkRoomPlayer
         //    }
         //}
     }
+
+    public void ReadyButton()
+    {
+        if (readyToBegin)
+        {
+            CmdChangeReadyState(true);
+        }
+        else
+        {
+            CmdChangeReadyState(false);
+        }
+    }
 }

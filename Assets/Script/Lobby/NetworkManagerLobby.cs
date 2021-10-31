@@ -5,31 +5,26 @@ using UnityEngine;
 
 public class NetworkManagerLobby : NetworkRoomManager
 {
-    [SerializeField] private Canvas canvasPanelUILobby = null;
-
-    private void Update()
-    {
-        if (IsSceneActive(RoomScene))
-        {
-            canvasPanelUILobby = FindObjectOfType<Canvas>();
-        }
-    }
-
     public override void OnRoomServerConnect(NetworkConnection conn)
     {
         base.OnRoomServerConnect(conn);
 
-        if (IsSceneActive(RoomScene))
-        {
-            SpawnPosition spawnPos = FindObjectOfType<SpawnPosition>();
+        Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
 
-            if (canvasPanelUILobby != null)
-            {
-                var player = Instantiate(spawnPrefabs[0], spawnPos.GetSpawnPosition(), Quaternion.identity);
-                player.transform.SetParent(canvasPanelUILobby.transform);
-                NetworkServer.Spawn(player, conn);
-            }
-        }
+        var player = Instantiate(spawnPrefabs[0], spawnPos, Quaternion.identity);
+        NetworkServer.Spawn(player, conn);
+
+        //if (IsSceneActive(RoomScene))
+        //{
+        //    SpawnPosition spawnPos = FindObjectOfType<SpawnPosition>();
+        //
+        //    if (canvasPanelUILobby != null)
+        //    {
+        //        var player = Instantiate(spawnPrefabs[0], spawnPos.GetSpawnPosition(), Quaternion.identity);
+        //        player.transform.SetParent(canvasPanelUILobby.transform);
+        //        NetworkServer.Spawn(player, conn);
+        //    }
+        //}
     }
 
 

@@ -6,7 +6,7 @@ using Mirror;
 public class PlayerMovement : NetworkBehaviour
 {
     public float speed;
-    private Vector2 movement;
+    private Vector3 movement;
 
     private Camera mainCam;
     private Vector3 camPos;
@@ -18,7 +18,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Start()
     {
-        if (isLocalPlayer)
+        if (hasAuthority)
         {
             mainCam = FindObjectOfType<Camera>();
             mainCam.transform.position = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
@@ -28,7 +28,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Update()
     {
-        if (!isLocalPlayer) return;
+        if (!hasAuthority) return;
 
         PlayerMove();
 
@@ -75,15 +75,16 @@ public class PlayerMovement : NetworkBehaviour
         mainCam.transform.position = camPos;
     }
 
-    private void GetInput()
+    private Vector3 GetInput()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.z = Input.GetAxisRaw("Vertical");
+
+        return movement;
     }
 
     private void PlayerMove()
     {
-        GetInput();
-        transform.position += new Vector3(movement.x, movement.y, transform.position.z) * speed * Time.deltaTime;
+        transform.position += GetInput() * speed * Time.deltaTime;
     }
 }
