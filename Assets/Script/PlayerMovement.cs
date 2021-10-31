@@ -18,12 +18,12 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Start()
     {
-        if (hasAuthority)
-        {
-            mainCam = FindObjectOfType<Camera>();
-            mainCam.transform.position = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
-            camPos = mainCam.transform.position;
-        }
+        //if (hasAuthority)
+        //{
+        //    mainCam = FindObjectOfType<Camera>();
+        //    mainCam.transform.position = new Vector3(mainCam.transform.position.x, mainCam.transform.position.y, mainCam.transform.position.z);
+        //    camPos = mainCam.transform.position;
+        //}
     }
 
     private void Update()
@@ -32,12 +32,12 @@ public class PlayerMovement : NetworkBehaviour
 
         PlayerMove();
 
-        CameraPosition();
+        //CameraPosition();
     }
 
     private void CameraPosition()
     {
-        camPos = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
+        camPos = new Vector3(mainCam.transform.position.x, mainCam.transform.position.y, mainCam.transform.position.z);
 
         if (camPos.x > camRightMax && camPos.y > camTopMax)
         {
