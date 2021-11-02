@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager = null;
 
-    private string firstRunAppKey = "FirstRunApp";
-
     [Header("UI")]
-    [SerializeField] private GameObject panelInputName;
     [SerializeField] private GameObject panelJoinGame;
+    [SerializeField] private GameObject panelMainMenu;
+    [SerializeField] private GameObject panelProfil;
     [SerializeField] private TMP_InputField networkAddrField;
+    [SerializeField] private GameObject inputNickname;
+    [SerializeField] private Button enterRoomButton;
 
     private void Start()
     {
@@ -21,19 +23,33 @@ public class MainMenu : MonoBehaviour
         {
             networkManager = FindObjectOfType<NetworkManager>();
         }
+
+        if (!PlayerPrefs.HasKey(PlayerSettings.firstRunAppKey))
+        {
+            inputNickname.SetActive(true);
+        }
+        else
+        {
+            PlayerSettings.nickname = PlayerPrefs.GetString(PlayerSettings.playerPrefsNameKey);
+            panelMainMenu.SetActive(true);
+        }
+    }
+
+    private void Update()
+    {
+        if(networkAddrField.text != "")
+        {
+            enterRoomButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            enterRoomButton.gameObject.SetActive(false);
+        }
     }
 
     public void StartGame()
     {
-        if (PlayerPrefs.HasKey(firstRunAppKey))
-        {
-            panelJoinGame.SetActive(true);
-        }
-        else
-        {
-            panelInputName.SetActive(true);
-            PlayerPrefs.SetInt(firstRunAppKey, 1);
-        }
+        panelJoinGame.SetActive(true);
     }
 
     public void CreateRoom()
@@ -46,8 +62,13 @@ public class MainMenu : MonoBehaviour
     {
         if (!NetworkClient.active)
         {
-            networkManager.networkAddress = networkAddrField.text;
-            networkManager.StartClient();
+            if (networkAddrField.text != "")
+            {
+                //cek jika kode yang dimasukkan tersedia atau tidak
+                networkManager.networkAddress = networkAddrField.text;
+                //panelJoinGame.SetActive(false);
+                networkManager.StartClient();
+            }
         }
     }
 
@@ -56,4 +77,8 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Go to Setting Panel");
     }
 
+    public void Profil()
+    {
+        panelProfil.SetActive(true);
+    }
 }

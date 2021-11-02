@@ -18,10 +18,10 @@ public class CameraRotation : NetworkBehaviour
 
     private float smoothFactor = 0.5f;
 
-    private float zMax = -12f;
-    private float zMin = 2.84f;
-    private float xMax = 7.31f;
-    private float xMin = -6.8f;
+    //private float zMax = -12f;
+    //private float zMin = 2.84f;
+    //private float xMax = 7.31f;
+    //private float xMin = -6.8f;
 
     private void Start()
     {

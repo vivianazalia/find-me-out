@@ -69,12 +69,12 @@ public class CreateRoomUI : MonoBehaviour
             if (i < limitMaxPlayer - 4)
             {
                 maxPlayerCountButtons[i].interactable = false;
-                text.color = Color.gray;
+                text.color = new Color(.4f, .5f, .5f, 1f);
             }
             else
             {
                 maxPlayerCountButtons[i].interactable = true;
-                text.color = Color.black;
+                text.color = new Color(.6f, .9f, .9f, 1f);
             }
         }
     }
