@@ -63,7 +63,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  showRoomGUI: 1
+  showRoomGUI: 0
   readyToBegin: 0
   index: 0
-  panelPlayer: {fileID: 4041420058060897511, guid: f8df730a3ae67aa448303df12b7111ed, type: 3}
+  nickname: 
+  lobbyPlayerMovement: {fileID: 0}

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 
 public class PlayerMovement : NetworkBehaviour
 {
     public float speed;
-    private Vector2 movement;
+    private Vector3 movement;
 
     private Camera mainCam;
     private Vector3 camPos;
@@ -16,28 +17,38 @@ public class PlayerMovement : NetworkBehaviour
     private float camTopMax = 3.66f;
     private float camButtomMax = -3.68f;
 
+    [SyncVar(hook = nameof(SetNickname_Hook))]
+    public string nickname;
+    [SerializeField]
+    private TMP_Text nicknameText;
+
+    public void SetNickname_Hook(string oldValue, string newValue)
+    {
+        nicknameText.text = newValue;
+    }
+
     private void Start()
     {
-        if (isLocalPlayer)
+        if (hasAuthority)
         {
-            mainCam = FindObjectOfType<Camera>();
-            mainCam.transform.position = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
-            camPos = mainCam.transform.position;
+            Camera cam = Camera.main;
+            cam.transform.SetParent(transform);
+            cam.transform.localPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
         }
     }
 
     private void Update()
     {
-        if (!isLocalPlayer) return;
+        if (!hasAuthority) return;
 
         PlayerMove();
 
-        CameraPosition();
+        //CameraPosition();
     }
 
     private void CameraPosition()
     {
-        camPos = new Vector3(transform.position.x, transform.position.y, mainCam.transform.position.z);
+        camPos = new Vector3(mainCam.transform.position.x, mainCam.transform.position.y, mainCam.transform.position.z);
 
         if (camPos.x > camRightMax && camPos.y > camTopMax)
         {
@@ -75,15 +86,16 @@ public class PlayerMovement : NetworkBehaviour
         mainCam.transform.position = camPos;
     }
 
-    private void GetInput()
+    private Vector3 GetInput()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.z = Input.GetAxisRaw("Vertical");
+
+        return movement;
     }
 
     private void PlayerMove()
     {
-        GetInput();
-        transform.position += new Vector3(movement.x, movement.y, transform.position.z) * speed * Time.deltaTime;
+        transform.position += GetInput() * speed * Time.deltaTime;
     }
 }

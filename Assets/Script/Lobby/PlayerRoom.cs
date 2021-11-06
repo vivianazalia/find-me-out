@@ -6,34 +6,49 @@ using TMPro;
 
 public class PlayerRoom : NetworkRoomPlayer
 {
-    [SerializeField] private PanelPlayer panelPlayer;
+    [SyncVar]
+    public string nickname;
 
-    public void DrawPlayerPanel()
+    public PlayerMovement lobbyPlayerMovement;
+
+    private void Start()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        base.Start();
+        if (isServer)
+        {
+            SpawnLobbyPlayerCharacter();
+            LobbyUI.instance.ActiveStartButton();
+        }
 
-        Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
+        if (isLocalPlayer)
+        {
+            CmdSetNickname(PlayerSettings.nickname);
+        }
 
-        GameObject player = Instantiate(panelPlayer.gameObject, spawnPos, Quaternion.identity);
-        player.transform.position = spawnPos;
-        player.transform.SetParent(canvas.transform);
+        LobbyUI.instance.GameLobbyPlayerCounter.UpdatePlayerCount();
     }
 
-    public override void OnClientEnterRoom()
+    private void SpawnLobbyPlayerCharacter()
     {
-        base.OnClientEnterRoom();
+        Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
 
-        //if (isLocalPlayer)
-        //{
-        //    Debug.Log("On Client Enter Room");
-        //
-        //    NetworkRoomManager room = NetworkManager.singleton as NetworkRoomManager;
-        //    if (room)
-        //    {
-        //        if (!NetworkManager.IsSceneActive(room.RoomScene)) return;
-        //
-        //        DrawPlayerPanel();
-        //    }
-        //}
+        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent<LobbyPlayerMovement>();
+        NetworkServer.Spawn(player.gameObject, connectionToClient);
+        player.ownerNetId = netId;
+    }
+
+    [Command]
+    public void CmdSetNickname(string nick)
+    {
+        nickname = nick;
+        lobbyPlayerMovement.nickname = nick;
+    }
+
+    private void OnDestroy()
+    {
+        if(LobbyUI.instance != null)
+        {
+            LobbyUI.instance.GameLobbyPlayerCounter.UpdatePlayerCount();
+        }
     }
 }
