@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private NetworkManager networkManager = null;
+    [SerializeField] private NetworkManagerLobby networkManager = null;
 
     [Header("UI")]
     [SerializeField] private GameObject panelJoinGame;
     [SerializeField] private GameObject panelMainMenu;
     [SerializeField] private GameObject panelProfil;
+    [SerializeField] private GameObject panelSettingGameplay;
     [SerializeField] private TMP_InputField networkAddrField;
     [SerializeField] private GameObject inputNickname;
     [SerializeField] private Button enterRoomButton;
@@ -21,7 +22,7 @@ public class MainMenu : MonoBehaviour
     {
         if(networkManager == null)
         {
-            networkManager = FindObjectOfType<NetworkManager>();
+            networkManager = FindObjectOfType<NetworkManagerLobby>();
         }
 
         if (!PlayerPrefs.HasKey(PlayerSettings.firstRunAppKey))
@@ -54,7 +55,12 @@ public class MainMenu : MonoBehaviour
 
     public void CreateRoom()
     {
-        networkManager.StartHost();
+        if(networkManager.maxConnections != 0)
+        {
+            networkManager.minPlayers = 4;
+            panelSettingGameplay.SetActive(false);
+            networkManager.StartHost();
+        }
         Debug.Log("Host address : " + networkManager.networkAddress);
     }
 

@@ -11,13 +11,15 @@ public class GameLobbyPlayerCounter : NetworkBehaviour
     [SyncVar]
     private int maxPlayers;
 
-    [SerializeField] private TMP_Text playerCount;
+    [SerializeField] private TMP_Text playerCountText;
 
     public void UpdatePlayerCount()
     {
         var players = FindObjectsOfType<PlayerRoom>();
         bool isStartable = players.Length >= minPlayers;
-        playerCount.text = players.Length + "/" + maxPlayers;
+        playerCountText.color = isStartable ? Color.white : Color.red;
+        playerCountText.text = players.Length + "/" + maxPlayers;
+        LobbyUI.instance.SetInteractableStartButton(isStartable);
     }
 
     private void Start()

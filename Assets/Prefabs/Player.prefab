@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2860298106906276048}
   - component: {fileID: 2860298106906276055}
   - component: {fileID: -2669540091670384439}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,6 +130,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   speed: 3
+  nickname: 
+  nicknameText: {fileID: 0}
 --- !u!114 &-2669540091670384439
 MonoBehaviour:
   m_ObjectHideFlags: 0

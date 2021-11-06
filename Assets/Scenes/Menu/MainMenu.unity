@@ -7092,7 +7092,7 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/Lobby/Lobby.unity
   transport: {fileID: 1369758511}
   networkAddress: localhost
-  maxConnections: 8
+  maxConnections: 0
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
@@ -7101,8 +7101,8 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 909176101260331642, guid: 9e41d526727e9654c996692fb9b323ce, type: 3}
-  showRoomGUI: 1
-  minPlayers: 4
+  showRoomGUI: 0
+  minPlayers: 0
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
   RoomScene: Assets/Scenes/Lobby/Lobby.unity
   GameplayScene: Assets/Scenes/Gameplay/Map_01.unity
@@ -8370,18 +8370,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1351317264}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1679100440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8563,6 +8551,7 @@ MonoBehaviour:
   panelJoinGame: {fileID: 1898475915}
   panelMainMenu: {fileID: 1941060280}
   panelProfil: {fileID: 1704164299}
+  panelSettingGameplay: {fileID: 1351317264}
   networkAddrField: {fileID: 1127885354}
   inputNickname: {fileID: 717700543}
   enterRoomButton: {fileID: 1107879330}
