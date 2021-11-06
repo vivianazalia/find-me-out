@@ -6,46 +6,49 @@ using TMPro;
 
 public class PlayerRoom : NetworkRoomPlayer
 {
-    [SerializeField] private PanelPlayer panelPlayer;
+    [SyncVar]
+    public string nickname;
 
-    public void DrawPlayerPanel()
+    public PlayerMovement lobbyPlayerMovement;
+
+    private void Start()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        base.Start();
+        if (isServer)
+        {
+            SpawnLobbyPlayerCharacter();
+            LobbyUI.instance.ActiveStartButton();
+        }
 
+        if (isLocalPlayer)
+        {
+            CmdSetNickname(PlayerSettings.nickname);
+        }
+
+        LobbyUI.instance.GameLobbyPlayerCounter.UpdatePlayerCount();
+    }
+
+    private void SpawnLobbyPlayerCharacter()
+    {
         Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
 
-        GameObject player = Instantiate(panelPlayer.gameObject, spawnPos, Quaternion.identity);
-        player.transform.position = spawnPos;
-        player.transform.SetParent(canvas.transform);
+        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent<LobbyPlayerMovement>();
+        NetworkServer.Spawn(player.gameObject, connectionToClient);
+        player.ownerNetId = netId;
     }
 
-    public override void OnClientEnterRoom()
+    [Command]
+    public void CmdSetNickname(string nick)
     {
-        base.OnClientEnterRoom();
-
-        //if (isLocalPlayer)
-        //{
-        //    Debug.Log("On Client Enter Room");
-        //
-        //    NetworkRoomManager room = NetworkManager.singleton as NetworkRoomManager;
-        //    if (room)
-        //    {
-        //        if (!NetworkManager.IsSceneActive(room.RoomScene)) return;
-        //
-        //        DrawPlayerPanel();
-        //    }
-        //}
+        nickname = nick;
+        lobbyPlayerMovement.nickname = nick;
     }
 
-    public void ReadyButton()
+    private void OnDestroy()
     {
-        if (readyToBegin)
+        if(LobbyUI.instance != null)
         {
-            CmdChangeReadyState(true);
-        }
-        else
-        {
-            CmdChangeReadyState(false);
+            LobbyUI.instance.GameLobbyPlayerCounter.UpdatePlayerCount();
         }
     }
 }

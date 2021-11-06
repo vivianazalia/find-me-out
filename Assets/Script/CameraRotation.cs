@@ -5,8 +5,8 @@ using Mirror;
 
 public class CameraRotation : NetworkBehaviour
 {
-    private PlayerMovement[] targets;
-    public PlayerMovement targetObj = null;
+    private LobbyPlayerMovement[] targets;
+    public LobbyPlayerMovement targetObj = null;
 
     public float speedH = 2f;
     public float speedV = 2f;
@@ -25,9 +25,8 @@ public class CameraRotation : NetworkBehaviour
 
     private void Start()
     {
-        targets = FindObjectsOfType<PlayerMovement>();
-
-        foreach (PlayerMovement target in targets)
+        targets = FindObjectsOfType<LobbyPlayerMovement>();
+        foreach (LobbyPlayerMovement target in targets)
         {
             if (target.hasAuthority)
             {
@@ -40,6 +39,8 @@ public class CameraRotation : NetworkBehaviour
 
     private void Update()
     {
+
+        
         //yaw += speedH * Input.GetAxis("Mouse X");
         //pitch -= speedV * Input.GetAxis("Mouse Y");
         //

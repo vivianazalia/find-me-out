@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 
-public class CreateRoomUI : MonoBehaviour
+public class CreateRoomUI : NetworkBehaviour
 {
     [SerializeField] private List<Button> chooseMapButtons;
 
@@ -14,10 +15,12 @@ public class CreateRoomUI : MonoBehaviour
 
     private CreateGameRoomData roomData;
 
+    private EMap map;
+
     // Start is called before the first frame update
     void Start()
     {
-        roomData = new CreateGameRoomData { policeCount = 1, maxPlayerCount = 8 };   
+        roomData = new CreateGameRoomData { policeCount = 1, maxPlayerCount = 8, map = EMap.Desert};   
     }
 
     public void UpdateMaxPlayerCount(int count)
@@ -35,6 +38,9 @@ public class CreateRoomUI : MonoBehaviour
                 maxPlayerCountButtons[i].image.color = new Color(.8f, .8f, .2f, 0f);
             }
         }
+
+        var manager = NetworkManager.singleton as NetworkManagerLobby;
+        manager.maxConnections = roomData.maxPlayerCount;
     }
 
     public void UpdatePoliceCount(int count)
@@ -78,11 +84,23 @@ public class CreateRoomUI : MonoBehaviour
             }
         }
     }
+
+    public void UpdateMap(EMap map)
+    {
+        
+    }
 }
 
 public class CreateGameRoomData
 {
-    public string map;
+    public EMap map;
     public int policeCount;
     public int maxPlayerCount;
+}
+
+public enum EMap
+{
+    Desert,
+    Snow,
+    Autumn
 }

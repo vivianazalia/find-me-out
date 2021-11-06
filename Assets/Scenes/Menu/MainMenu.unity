@@ -6914,6 +6914,7 @@ GameObject:
   - component: {fileID: 1351317267}
   - component: {fileID: 1351317266}
   - component: {fileID: 1351317268}
+  - component: {fileID: 1351317269}
   m_Layer: 0
   m_Name: SettingGameplay
   m_TagString: Untagged
@@ -6997,6 +6998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e54a643d0cd0d34598ade506d0d3024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   chooseMapButtons: []
   policeCountButtons:
   - {fileID: 1649692995}
@@ -7008,6 +7011,23 @@ MonoBehaviour:
   - {fileID: 1972692501}
   - {fileID: 415475790}
   - {fileID: 1223048192}
+--- !u!114 &1351317269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351317264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 141674102
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1369758510
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,7 +7092,7 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/Lobby/Lobby.unity
   transport: {fileID: 1369758511}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 8
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
@@ -7082,7 +7102,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 909176101260331642, guid: 9e41d526727e9654c996692fb9b323ce, type: 3}
   showRoomGUI: 1
-  minPlayers: 1
+  minPlayers: 4
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
   RoomScene: Assets/Scenes/Lobby/Lobby.unity
   GameplayScene: Assets/Scenes/Gameplay/Map_01.unity

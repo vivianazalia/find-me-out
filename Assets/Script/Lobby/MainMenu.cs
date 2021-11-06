@@ -66,7 +66,6 @@ public class MainMenu : MonoBehaviour
             {
                 //cek jika kode yang dimasukkan tersedia atau tidak
                 networkManager.networkAddress = networkAddrField.text;
-                //panelJoinGame.SetActive(false);
                 networkManager.StartClient();
             }
         }
