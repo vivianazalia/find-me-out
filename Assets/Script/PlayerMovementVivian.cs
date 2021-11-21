@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using TMPro;
 
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovementVivian : NetworkBehaviour
 {
     public float speed;
     private Vector3 movement;

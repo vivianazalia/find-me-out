@@ -8,6 +8,10 @@ public class PlayerSettings : ScriptableObject
     [SerializeField] int lives = 2;
     [SerializeField] float moveSpeed = 50f;
     [SerializeField] bool isAI = false;
+
+    public static string nickname;
+    public static string playerPrefsNameKey = "PlayerName";
+    public static string firstRunAppKey = "FirstRunApp";
     public enum PlayerRole
     {
         Unassigned,

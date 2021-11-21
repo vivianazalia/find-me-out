@@ -9,7 +9,7 @@ public class PlayerRoom : NetworkRoomPlayer
     [SyncVar]
     public string nickname;
 
-    public PlayerMovement lobbyPlayerMovement;
+    public PlayerMovementVivian lobbyPlayerMovement;
 
     private void Start()
     {
