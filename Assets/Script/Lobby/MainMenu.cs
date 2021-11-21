@@ -1,34 +1,89 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManagerLobby networkManager = null;
 
-    private string firstRunAppKey = "FirstRunApp";
-
     [Header("UI")]
-    [SerializeField] private GameObject panelInputName;
     [SerializeField] private GameObject panelJoinGame;
+    [SerializeField] private GameObject panelMainMenu;
+    [SerializeField] private GameObject panelProfil;
+    [SerializeField] private GameObject panelSettingGameplay;
+    [SerializeField] private TMP_InputField networkAddrField;
+    [SerializeField] private GameObject inputNickname;
+    [SerializeField] private Button enterRoomButton;
 
-    public void StartGame()
+    private void Start()
     {
-        if (PlayerPrefs.HasKey(firstRunAppKey))
+        if(networkManager == null)
         {
-            panelJoinGame.SetActive(true);
+            networkManager = FindObjectOfType<NetworkManagerLobby>();
+        }
+
+        if (!PlayerPrefs.HasKey(PlayerSettings.firstRunAppKey))
+        {
+            inputNickname.SetActive(true);
         }
         else
         {
-            panelInputName.SetActive(true);
-            PlayerPrefs.SetInt(firstRunAppKey, 1);
+            PlayerSettings.nickname = PlayerPrefs.GetString(PlayerSettings.playerPrefsNameKey);
+            panelMainMenu.SetActive(true);
         }
     }
 
-    public void HostLobby()
+    private void Update()
     {
-        networkManager.StartHost();
+        if(networkAddrField.text != "")
+        {
+            enterRoomButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            enterRoomButton.gameObject.SetActive(false);
+        }
+    }
+
+    public void StartGame()
+    {
+        panelJoinGame.SetActive(true);
+    }
+
+    public void CreateRoom()
+    {
+        if(networkManager.maxConnections != 0)
+        {
+            networkManager.minPlayers = 4;
+            panelSettingGameplay.SetActive(false);
+            networkManager.StartHost();
+        }
         Debug.Log("Host address : " + networkManager.networkAddress);
     }
 
+    public void JoinRoom()
+    {
+        if (!NetworkClient.active)
+        {
+            if (networkAddrField.text != "")
+            {
+                //cek jika kode yang dimasukkan tersedia atau tidak
+                networkManager.networkAddress = networkAddrField.text;
+                networkManager.StartClient();
+            }
+        }
+    }
+
+    public void Setting()
+    {
+        Debug.Log("Go to Setting Panel");
+    }
+
+    public void Profil()
+    {
+        panelProfil.SetActive(true);
+    }
 }
