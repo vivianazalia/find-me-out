@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> Maps = new List<GameObject>(); //Di set di unity
     public enum State
     {
+        Start,
+        ChooseMap,
         Wait,
+        InRoom,
         Play,
         End
     }
@@ -30,7 +33,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GameLoop(gamestate);
     }
 
     void GameLoop(State _gamestate)

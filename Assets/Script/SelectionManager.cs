@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 {
-    [SerializeField] string selectableTag = "Selectable";
+    [SerializeField] string selectableTag = "Selectable"; //Tambah tag "Capturable"
     ISelectionResponse _selectionResponse;
     Transform _selection;
     void Update()

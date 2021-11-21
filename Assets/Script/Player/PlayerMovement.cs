@@ -18,6 +18,6 @@ public class PlayerMovement
     public void Tick()
     {
         //Geraknya player di sini, gerakkan transform menggunakan playerInput sebanyak moveSpeed di playerSettings
-        
+        //Tiap 0.5 detik, instantiate Footstep di bawah
     }
 }
