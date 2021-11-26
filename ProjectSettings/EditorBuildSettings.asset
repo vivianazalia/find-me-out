@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/MainMenu.unity
     guid: 1d8b8a17a9436e049b9724e5f5e24bf6
   - enabled: 1
-    path: Assets/Scenes/Lobby/Lobby.unity
-    guid: 82913da435d3c914caa02c21531c29f9
+    path: Assets/Scenes/FBX_MainRoom/LobbyRoom.unity
+    guid: f962c908f3b104a46a4abd0643bc34f6
   - enabled: 1
-    path: Assets/Scenes/Gameplay/Map_01.unity
-    guid: 9793244a839399249a786e11e411b09d
+    path: Assets/Scenes/FBX_Snow/RoomSnow.unity
+    guid: be9db93bf417dfe498d922fab6022fd1
+  - enabled: 1
+    path: Assets/Scenes/Gameplay/FBX_Desert/RoomDesert.unity
+    guid: ec636fa66521d954ab42a4aa0f84830d
+  - enabled: 1
+    path: Assets/Scenes/FBX_Autum/AutumScene.unity
+    guid: 0ed1f447d8a1db148ad9f06ea6233ca6
   m_configObjects: {}
