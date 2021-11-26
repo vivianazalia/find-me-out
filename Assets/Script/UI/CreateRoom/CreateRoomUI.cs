@@ -15,9 +15,9 @@ public class CreateRoomUI : NetworkBehaviour
 
     private CreateGameRoomData roomData;
 
-    private EMap map;
+    [Scene]
+    public List<string> gameplaySceneList = new List<string>();
 
-    // Start is called before the first frame update
     void Start()
     {
         roomData = new CreateGameRoomData { policeCount = 1, maxPlayerCount = 8, map = EMap.Desert};   
@@ -45,7 +45,7 @@ public class CreateRoomUI : NetworkBehaviour
 
     public void UpdatePoliceCount(int count)
     {
-        roomData.maxPlayerCount = count;
+        roomData.policeCount = count;
 
         for (int i = 0; i < policeCountButtons.Count; i++)
         {
@@ -85,9 +85,24 @@ public class CreateRoomUI : NetworkBehaviour
         }
     }
 
-    public void UpdateMap(EMap map)
+    public void UpdateMap(int map)
     {
-        
+        roomData.map = (EMap)map;
+
+        for (int i = 0; i < chooseMapButtons.Count; i++)
+        {
+            if (i == map)
+            {
+                chooseMapButtons[i].image.color = new Color(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                chooseMapButtons[i].image.color = new Color(1f, 1f, 1f, .5f);
+            }
+        }
+
+        var manager = NetworkManager.singleton as NetworkManagerLobby;
+        manager.GameplayScene = gameplaySceneList[map];
     }
 }
 

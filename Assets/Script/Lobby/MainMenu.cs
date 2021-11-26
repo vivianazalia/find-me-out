@@ -57,7 +57,7 @@ public class MainMenu : MonoBehaviour
     {
         if(networkManager.maxConnections != 0)
         {
-            networkManager.minPlayers = 4;
+            networkManager.minPlayers = 1;
             panelSettingGameplay.SetActive(false);
             networkManager.StartHost();
         }

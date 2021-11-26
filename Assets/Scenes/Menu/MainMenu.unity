@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2992,7 +2992,7 @@ GameObject:
   - component: {fileID: 721736017}
   - component: {fileID: 721736016}
   m_Layer: 0
-  m_Name: Forest
+  m_Name: Autumn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3061,7 +3061,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 721736017}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351317268}
+        m_TargetAssemblyTypeName: CreateRoomUI, Assembly-CSharp
+        m_MethodName: UpdateMap
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &721736017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7000,7 +7012,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  chooseMapButtons: []
+  chooseMapButtons:
+  - {fileID: 1808473099}
+  - {fileID: 1620850898}
+  - {fileID: 721736016}
   policeCountButtons:
   - {fileID: 1649692995}
   - {fileID: 41748184}
@@ -7011,6 +7026,10 @@ MonoBehaviour:
   - {fileID: 1972692501}
   - {fileID: 415475790}
   - {fileID: 1223048192}
+  gameplaySceneList:
+  - Assets/Scenes/Gameplay/FBX_Desert/RoomDesert.unity
+  - Assets/Scenes/FBX_Snow/RoomSnow.unity
+  - Assets/Scenes/FBX_Autum/AutumScene.unity
 --- !u!114 &1351317269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7089,7 +7108,7 @@ MonoBehaviour:
   autoStartServerBuild: 1
   serverTickRate: 30
   offlineScene: Assets/Scenes/Menu/MainMenu.unity
-  onlineScene: Assets/Scenes/Lobby/Lobby.unity
+  onlineScene: Assets/Scenes/FBX_MainRoom/LobbyRoom.unity
   transport: {fileID: 1369758511}
   networkAddress: localhost
   maxConnections: 0
@@ -7104,8 +7123,8 @@ MonoBehaviour:
   showRoomGUI: 0
   minPlayers: 0
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
-  RoomScene: Assets/Scenes/Lobby/Lobby.unity
-  GameplayScene: Assets/Scenes/Gameplay/Map_01.unity
+  RoomScene: Assets/Scenes/FBX_MainRoom/LobbyRoom.unity
+  GameplayScene: 
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
@@ -7934,7 +7953,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1620850899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351317268}
+        m_TargetAssemblyTypeName: CreateRoomUI, Assembly-CSharp
+        m_MethodName: UpdateMap
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1620850899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8637,7 +8668,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1808473100}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1351317268}
+        m_TargetAssemblyTypeName: CreateRoomUI, Assembly-CSharp
+        m_MethodName: UpdateMap
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1808473100
 MonoBehaviour:
   m_ObjectHideFlags: 0
