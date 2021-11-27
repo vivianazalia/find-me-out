@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(InputManager),typeof(PlayerMovement),typeof(AnimationController))]
 public class Player : MonoBehaviour
 {
     public List<Skill> skills = new List<Skill>();
 
 
-    [SerializeField] PlayerSettings playerSettings; //Di set di inspector
-    IPlayerInput playerInput;
+    PlayerSettings playerSettings;
     PlayerMovement playerMovement;
+    InputManager inputManager;
+    AnimationController animationController;
+
 
     private void Awake()
     {
-        // TODO: Buat class KeyboardInput yg memakai IPlayerInput. AiInput gausah
-        // playerInput = playerSettings.IsAI ? new AiInput() as IPlayerInput : new KeyboardInput() as IPlayerInput;
-        playerInput = new KeyboardInput();
-        playerMovement = new PlayerMovement(playerInput, transform, playerSettings);
+        inputManager = GetComponent<InputManager>();
+        playerMovement = GetComponent<PlayerMovement>();
+        animationController = GetComponent<AnimationController>();
+        playerSettings = GetComponent<PlayerSettings>();
     }
 
     public void UseSkill(char c)
@@ -40,6 +43,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        playerMovement.Tick();
+        animationController.handleAnimation();
     }
 }

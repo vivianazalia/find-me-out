@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="Style1.uss" />
+    <ui:VisualElement name="background" style="flex-grow: 1; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
+        <ui:VisualElement name="left" style="flex-grow: 1;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+        <ui:VisualElement name="right" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>
