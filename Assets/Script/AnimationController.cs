@@ -48,5 +48,18 @@ public class AnimationController : MonoBehaviour //Kamera jangan lupa dilepas da
         {
             animator.SetBool(isRunningHash, false);
         }
+
+
+
+        if (inputManager.IsJumping)
+        {
+            animator.SetBool(isJumpingHash, true);
+            animator.SetBool(isRunningHash, false);
+            animator.SetBool(isWalkingHash, false);
+        }
+        else
+        {
+            animator.SetBool(isJumpingHash, false);
+        }
     }
 }

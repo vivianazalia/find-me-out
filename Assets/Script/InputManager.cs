@@ -21,6 +21,8 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
     bool isJumpPressed;
     bool isLookPressed;
 
+    bool isJumping;
+
     public bool IsMovePressed { get { return isMovePressed; } }
     public bool IsRunPressed { get { return isRunPressed; } }
     public bool IsJumpPressed { get { return isJumpPressed; } }
@@ -29,6 +31,8 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
     public void AddGravity(float gravityValue) { leftStickVelocity.y += gravityValue; }
     public Vector2 LeftStickInput { get { return leftStickInput; } }
     public Vector2 RightStickInput { get { return rightStickInput; } }
+    public bool IsGrounded { get { return characterController.isGrounded; } }
+    public bool IsJumping { get { return isJumping; } }
 
     private void Awake()
     {
@@ -57,6 +61,7 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
         if (characterController.isGrounded)
         {
             leftStickVelocity.y += Mathf.Sqrt(playerSetting.jumpHeight * -3.0f * playerSetting.gravityValue);
+            isJumping = true;
         }
     }
 
@@ -87,6 +92,14 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
             leftStickVelocity.z = leftStickInput.y * playerSetting.walkSpeed;
         }
         isMovePressed = leftStickInput.x != 0 || leftStickInput.y != 0;
+    }
+
+    private void Update()
+    {
+        if (characterController.isGrounded && isJumping)
+        {
+            isJumping = false;
+        }
     }
 
     private void OnEnable()
