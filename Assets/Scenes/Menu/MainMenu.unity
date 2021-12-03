@@ -7112,14 +7112,13 @@ MonoBehaviour:
   transport: {fileID: 1369758511}
   networkAddress: localhost
   maxConnections: 0
-  disconnectInactiveConnections: 0
-  disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 2860298106906276054, guid: f2c99ac2cfe15dd4d8b3bbe1279bb2a0, type: 3}
+  playerPrefab: {fileID: 4179241285056887909, guid: da6f9c4beca0a8242b2dbebdef8ff5fd, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 909176101260331642, guid: 9e41d526727e9654c996692fb9b323ce, type: 3}
+  - {fileID: 7208747618135213085, guid: f04e54419e0bf5c43adb3e8a65dda39e, type: 3}
+  - {fileID: 4618894344830547564, guid: dbbbfa46a4203534da90fefde6d99754, type: 3}
   showRoomGUI: 0
   minPlayers: 0
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
@@ -7128,6 +7127,7 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
+  policeCount: 0
 --- !u!4 &1369758513
 Transform:
   m_ObjectHideFlags: 0

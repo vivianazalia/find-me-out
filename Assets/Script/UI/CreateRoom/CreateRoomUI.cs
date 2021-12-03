@@ -47,6 +47,9 @@ public class CreateRoomUI : NetworkBehaviour
     {
         roomData.policeCount = count;
 
+        var manager = NetworkManager.singleton as NetworkManagerLobby;
+        manager.policeCount = count;
+
         for (int i = 0; i < policeCountButtons.Count; i++)
         {
             if (i == count - 1)

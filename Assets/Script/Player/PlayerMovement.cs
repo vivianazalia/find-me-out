@@ -4,6 +4,18 @@ using UnityEngine;
 using Mirror;
 using TMPro;
 
+public enum PlayerType
+{
+    participant,
+    police,
+    thief
+}
+
+public struct Player : NetworkMessage
+{
+    PlayerType type;
+}
+
 public class PlayerMovement : NetworkBehaviour
 {
     public float speed;
@@ -22,18 +34,26 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField]
     private TMP_Text nicknameText;
 
+    [SerializeField] protected Animator anim;
+
     public void SetNickname_Hook(string oldValue, string newValue)
     {
         nicknameText.text = newValue;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (hasAuthority)
         {
             Camera cam = Camera.main;
             cam.transform.SetParent(transform);
             cam.transform.localPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
+            cam.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        if (isLocalPlayer)
+        {
+            Debug.Log("ID : " + netId);
         }
     }
 
@@ -96,6 +116,14 @@ public class PlayerMovement : NetworkBehaviour
 
     private void PlayerMove()
     {
+        if(GetInput() == Vector3.zero)
+        {
+            anim.SetBool("isWalk", false);
+        }
+        else
+        {
+            anim.SetBool("isWalk", true);
+        }
         transform.position += GetInput() * speed * Time.deltaTime;
     }
 }

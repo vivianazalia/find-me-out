@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject panelSettingGameplay;
     [SerializeField] private TMP_InputField networkAddrField;
     [SerializeField] private GameObject inputNickname;
-    [SerializeField] private Button enterRoomButton;
+    public Button enterRoomButton;
 
     private void Start()
     {

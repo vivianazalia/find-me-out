@@ -6,8 +6,21 @@ using TMPro;
 
 public class PlayerRoom : NetworkRoomPlayer
 {
+    public static PlayerRoom instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
     [SyncVar]
     public string nickname;
+
+    [SyncVar]
+    public PlayerType playerType;
 
     public PlayerMovement lobbyPlayerMovement;
 
@@ -42,6 +55,17 @@ public class PlayerRoom : NetworkRoomPlayer
     {
         nickname = nick;
         lobbyPlayerMovement.nickname = nick;
+    }
+
+    public void SetPlayerType(PlayerType type)
+    {
+        CmdSetPlayerType(type);
+    }
+
+    [Command (requiresAuthority = false)]
+    private void CmdSetPlayerType(PlayerType type)
+    {
+        playerType = type;
     }
 
     private void OnDestroy()
