@@ -4,22 +4,10 @@ using UnityEngine;
 
 public class SkillSearch : Skill
 {
-    public override void Invoke()
+    protected override void OnInvoke()
     {
         //Menampilkan semua footstep di sekitar
         //Semua footstep dalam area ini di masukkan ke list lalu di set visible. 
         throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        invoke_key = 's';
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

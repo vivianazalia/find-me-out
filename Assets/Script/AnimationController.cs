@@ -21,6 +21,11 @@ public class AnimationController : MonoBehaviour //Kamera jangan lupa dilepas da
         isRunningHash = Animator.StringToHash("isRunning");
         isJumpingHash = Animator.StringToHash("isJumping");
     }
+	
+	private void Update()
+	{
+		handleAnimation();
+	}
      
     public void handleAnimation()
     {

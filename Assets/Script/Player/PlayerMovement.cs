@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     {
         cameraMain = Camera.main.transform;
     }
+	
+	void Update()
+	{
+		Tick();
+	}
 
     public void Tick()
     {

@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class SkillDistract : Skill
 {
-    public override void Invoke()
+    protected override void OnInvoke()
     {
-        //Instantiate koin, kasih velocity ke arah pandangan <-- ambil arah pandangnya player dari sini gimanaaaaa
+        //Instantiate koin, kasih velocity ke
         throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        invoke_key = 'd';
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
