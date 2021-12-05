@@ -9,7 +9,7 @@ public class SkillManager : MonoBehaviour
 	public List<Skill> HiderSkillSet {get{return hiderSkillSet;}}
 	public List<Skill> SeekerSkillSet {get{return seekerSkillSet;}}
 	
-	public List<Skill> GetSkillSet(PlayerRole role) {
+	public List<Skill> GetSkillSet(PlayerRole role) { //unused. Hard coded di MenuManager
 		if(role==PlayerRole.Hider){
 			return hiderSkillSet;
 		}

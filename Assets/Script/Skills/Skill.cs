@@ -7,20 +7,22 @@ using UnityEngine.EventSystems;
 
 public abstract class Skill : MonoBehaviour, IPointerClickHandler
 {
-	[SerializeField] Sprite readySprite, cancelSprite, cooldownSprite;
-	[SerializeField] bool useSelectPhase;
+	[SerializeField] protected Sprite readySprite, cancelSprite, cooldownSprite;
+	[SerializeField] protected bool useSelectPhase;
+	[SerializeField] protected string skillName;
+	public string SkillName {get{return skillName;}}
 	Image imageComponent;
 	
-	Player owner;
+	protected Player owner;
 	
-    protected int maxCooldown;
+    [SerializeField] protected int maxCooldown;
     protected float cooldown; // Kalau 0 == ready
-	protected bool quit = false;
+	bool quit = false;
 	
 	protected SkillState _skillState;
 	public SkillState skillState {get{return _skillState;}}
 	public bool IsReady {get{return (_skillState==SkillState.Ready);}}
-	public static event Action<SkillState> OnSkillStateChanged;
+	public static event Action<string, SkillState> OnSkillStateChanged;
 	
 	void Awake(){
 		_skillState = SkillState.Cooldown;
@@ -62,7 +64,7 @@ public abstract class Skill : MonoBehaviour, IPointerClickHandler
 			default:
 				break;
 		}
-		OnSkillStateChanged?.Invoke(newState);
+		OnSkillStateChanged?.Invoke(skillName, newState);
 	}
 	
 	protected virtual void OnReady(){

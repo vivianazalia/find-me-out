@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     Transform child;
 
     Vector3 verticalMove;
+	
+	public bool IsEnabled = true;
 
     void Awake()
     {
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	void Update()
 	{
-		Tick();
+		if(IsEnabled) Tick();
 	}
 
     public void Tick()
