@@ -37,8 +37,6 @@ public class GameManager : MonoBehaviour
 	};
 	[SerializeField] Gamerule defaultRule;
 	Gamerule rule;
-	
-	Random random = new Random();
 
     private void Awake()
     {
@@ -121,10 +119,10 @@ public class GameManager : MonoBehaviour
 	}
 	
 	void GetSelectedValues(){
-		rule.playerCount = MenuManager.SelectedPlayerCount;
-		rule.seekerCount = MenuManager.SelectedSeekerCount;
+		rule.playerCount = MenuManager.instance.SelectedPlayerCount;
+		rule.seekerCount = MenuManager.instance.SelectedSeekerCount;
 		rule.hiderCount = rule.playerCount - rule.seekerCount;
-		rule.mapID = MenuManager.SelectedMapID;
+		rule.mapID = MenuManager.instance.SelectedMapID;
 	}
 	
 	void GoToMapID(int mapID){
@@ -133,8 +131,8 @@ public class GameManager : MonoBehaviour
 	
 	void AssignRoles(){
 		int seekerLeft = rule.seekerCount;
-		while(seekerLeft){
-			int rand = random.Next(players.Count);
+		while(seekerLeft > 0){
+			int rand = UnityEngine.Random.Range(0, players.Count - 1);
 			if(players[rand].Role != PlayerRole.Seeker){
 				players[rand].AssignRole(PlayerRole.Seeker);
 				seekerList.Add(players[rand]);

@@ -127,8 +127,8 @@ public class MenuManager : MonoBehaviour //Per player 1?
 	}
 	
 	public void OnClickSelectSeekerCount(int newSeekerCount){
-		if((newSeekerCount * 3) > selectedplayerCount){
-			ButtonSelectPlayerCount(newSeekerCount * 3);
+		if((newSeekerCount * 3) > selectedPlayerCount){
+			OnClickSelectPlayerCount(newSeekerCount * 3);
 		} 
 		selectedSeekerCount = newSeekerCount;
 		//Feedback ke button
