@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,9 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
     public bool IsGrounded { get { return characterController.isGrounded; } }
     public bool IsJumping { get { return isJumping; } }
 
+    public static event Action<Vector2> OnTouchStart;
+    public static event Action<Vector2> OnTouchEnd;
+
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -53,6 +57,34 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
 
         playerInput.CharacterControls.Jump.started += OnJumpInput;
         playerInput.CharacterControls.Jump.canceled += OnJumpInput;
+
+        playerInput.Touch.TouchPosition.started += OnTouchPositionStarted;
+        playerInput.Touch.TouchPosition.canceled += OnTouchPositionEnd;
+
+        playerInput.Touch.TouchPress.started += OnTouchInputStart;
+        playerInput.Touch.TouchPress.canceled += OnTouchInputEnd;
+    }
+
+    private void OnTouchPositionEnd(InputAction.CallbackContext obj)
+    {
+        //throw new NotImplementedException();
+    }
+
+    private void OnTouchInputEnd(InputAction.CallbackContext context)
+    {
+        Debug.Log("Touch end");
+        OnTouchEnd?.Invoke(playerInput.Touch.TouchPosition.ReadValue<Vector2>());
+    }
+
+    private void OnTouchInputStart(InputAction.CallbackContext context)
+    {
+        Debug.Log("Touch start");
+        OnTouchStart?.Invoke(playerInput.Touch.TouchPosition.ReadValue<Vector2>());
+    }
+
+    private void OnTouchPositionStarted(InputAction.CallbackContext context)
+    {
+        //throw new NotImplementedException();
     }
 
     void OnJumpInput(InputAction.CallbackContext context)
@@ -105,10 +137,12 @@ public class InputManager : MonoBehaviour //Per player 1. Todo: Pindah character
     private void OnEnable()
     {
         playerInput.CharacterControls.Enable(); //Harus di enable dan disable
+        playerInput.Touch.Enable(); //Harus di enable dan disable
     }
 
     private void OnDisable()
     {
         playerInput.CharacterControls.Disable();
+        playerInput.Touch.Disable();
     }
 }

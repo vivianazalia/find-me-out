@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1)]
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -17,13 +18,11 @@ public class GameManager : MonoBehaviour
 	
 	//Script References
 	[SerializeField] PlayerSettings playerSetting;
-	[SerializeField] InputManager inputManager;
-	[SerializeField] MenuManager menuManager;
-	[SerializeField] SkillManager skillManager;
     
     GameState currentState;
     public GameState CurrentState { get { return currentState; } }
     public static event Action<GameState> OnGameStateChanged;
+	[SerializeField] GameState firstGameStateDebugOnly = GameState.SelectMenu;
 	
 	struct Gamerule{
 		public int mapID;
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        UpdateGameState(GameState.SelectMenu);
+        UpdateGameState(firstGameStateDebugOnly);
 		rule = defaultRule;
     }
 	
@@ -116,6 +115,7 @@ public class GameManager : MonoBehaviour
 		if(players.Contains(p)) return;
 		p.SetSettings(playerSetting); 
 		players.Add(p);
+		Debug.Log(players);
 	}
 	
 	void GetSelectedValues(){
@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
 		int seekerLeft = rule.seekerCount;
 		while(seekerLeft > 0){
 			int rand = UnityEngine.Random.Range(0, players.Count - 1);
+			Debug.Log(rand);
 			if(players[rand].Role != PlayerRole.Seeker){
 				players[rand].AssignRole(PlayerRole.Seeker);
 				seekerList.Add(players[rand]);

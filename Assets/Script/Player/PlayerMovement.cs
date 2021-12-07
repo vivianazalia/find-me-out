@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     Transform cameraMain;
     Transform child;
 
+    [SerializeField] GameObject footstepPrefab;
+    public int footstepLimit = 20;
+
     Vector3 verticalMove;
 	
 	public bool IsEnabled = true;
@@ -39,6 +42,26 @@ public class PlayerMovement : MonoBehaviour
         handleRotation();
 
         //Tiap 0.5 detik, instantiate Footstep di bawah
+        
+    }
+
+    float timer = 0;
+    int footstepSpawned = 0;
+    void SpawnFootstep(float time)
+    {
+        if (footstepSpawned > footstepLimit)
+        {
+            return;
+        }
+        timer += Time.deltaTime;
+        if (timer >= time && characterController.isGrounded)
+        {
+            // Instantiate object here
+            Instantiate(footstepPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            // set timer to 0 to start countdown again
+            timer = 0f;
+            footstepSpawned++;
+        }
     }
 
     void handleRotation()
@@ -57,10 +80,12 @@ public class PlayerMovement : MonoBehaviour
         if (inputManager.IsRunPressed)
         {
             characterController.Move(move * Time.deltaTime * playerSettings.runSpeed);
+            SpawnFootstep(0.2f);
         }
         else
         {
             characterController.Move(move * Time.deltaTime * playerSettings.walkSpeed);
+            SpawnFootstep(0.5f);
         }
     }
 

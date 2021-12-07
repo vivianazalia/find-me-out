@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
     PlayerSettings playerSettings;
 	PlayerMovement playerMovement;
 	GameObject currentChild, originalChild;
+	bool isUsingDefaultChild;
 	public PlayerRole Role {get{return playerSettings.Role;}}
-	
-	public static event Action<PlayerRole, PlayerRole> OnPlayerRoleChanged;
+
+    public bool IsUsingDefaultChild { get { return isUsingDefaultChild; } }
+
+    public static event Action<PlayerRole, PlayerRole> OnPlayerRoleChanged;
 
     private void Awake()
     {
@@ -49,12 +52,14 @@ public class Player : MonoBehaviour
 		child.transform.parent = this.transform;
 		currentChild = child;
 		currentChild?.SetActive(true);
+		isUsingDefaultChild = false;
 	}
 	
 	public void UseDefaultChild(){
 		currentChild?.SetActive(false);
 		originalChild?.SetActive(true);
 		//Mungkin butuh Destroy(currentChild)?
+		isUsingDefaultChild = true;
 	}
 	
 	public void SetDefaultChild(GameObject child){

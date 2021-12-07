@@ -7,7 +7,6 @@ public class MenuManager : MonoBehaviour //Per player 1?
 {
     //Reference ke Menu panel. 
     [SerializeField] GameObject selectMenu, selectRoomMenu, joinRoomMenu, createRoomMenu, lobbyMenu, settingsMenu, controlGUI, winLoseGUI, hiderSkillGUI, seekerSkillGUI;
-	[SerializeField] Text text;
 	
 	List<SkillButton> _skillButtons = new List<SkillButton>();
 	public List<SkillButton> skillButtons {get{return _skillButtons;}}
@@ -28,21 +27,21 @@ public class MenuManager : MonoBehaviour //Per player 1?
 	}
 	
 	public void ShowSkillUI(PlayerRole role){
-		hiderSkillGUI.SetActive(role==PlayerRole.Hider);
-		seekerSkillGUI.SetActive(role==PlayerRole.Seeker);
+		hiderSkillGUI?.SetActive(role==PlayerRole.Hider);
+		seekerSkillGUI?.SetActive(role==PlayerRole.Seeker);
 	}
 	
 	void HandleGameStateChanged(GameState newState){
-		selectMenu.SetActive(newState == GameState.SelectMenu);
-		selectRoomMenu.SetActive(newState == GameState.SelectRoom);
-		joinRoomMenu.SetActive(newState == GameState.JoinRoom);
-		createRoomMenu.SetActive(newState == GameState.CreateRoom);
-		lobbyMenu.SetActive(newState == GameState.InLobby);
-		settingsMenu.SetActive(newState == GameState.Settings);
-		controlGUI.SetActive(newState == GameState.Play);
+		selectMenu?.SetActive(newState == GameState.SelectMenu);
+		selectRoomMenu?.SetActive(newState == GameState.SelectRoom);
+		joinRoomMenu?.SetActive(newState == GameState.JoinRoom);
+		createRoomMenu?.SetActive(newState == GameState.CreateRoom);
+		lobbyMenu?.SetActive(newState == GameState.InLobby);
+		settingsMenu?.SetActive(newState == GameState.Settings);
+		controlGUI?.SetActive(newState == GameState.Play);
 		if(newState != GameState.Play){
-			hiderSkillGUI.SetActive(false);
-			seekerSkillGUI.SetActive(false);
+			hiderSkillGUI?.SetActive(false);
+			seekerSkillGUI?.SetActive(false);
 		}
 		winLoseGUI.SetActive(newState == GameState.SeekerWin || newState == GameState.SeekerLose);
 		if(newState == GameState.SeekerWin){
@@ -62,7 +61,7 @@ public class MenuManager : MonoBehaviour //Per player 1?
 	}
 	
 	void HandleSkillStateChanged(string skillName, SkillState state){
-		Debug.Log($"{skillName}'s state is {state.ToString()}");
+		Debug.Log($"{skillName}'s state is {state}");
 	}
 
 	public List<Skill> GetSkillsInButtons(PlayerRole role){
