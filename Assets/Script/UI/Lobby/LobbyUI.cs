@@ -36,34 +36,18 @@ public class LobbyUI : NetworkBehaviour
 
     public void OnClickStartButton()
     {
+        var manager = NetworkManager.singleton as NetworkManagerLobby;
+        manager.gameRuleData = FindObjectOfType<GameData>().GetGameRuleData();
+
         var players = FindObjectsOfType<PlayerRoom>();
         for(int i = 0; i < players.Length; i++)
         {
             players[i].readyToBegin = true;
         }
 
-        var manager = NetworkManager.singleton as NetworkManagerLobby;
-        //for (int i = 0; i < manager.policeCount; i++)
-        //{
-        //    Debug.Log("Looping ke-" + i);
-        //    int rand = Random.Range(0, players.Length);
-        //    players[rand].SetPlayerType(PlayerType.police);
-        //    Debug.Log(rand + " Masukk sini");
-        //}
-        //
-        //foreach(var player in players)
-        //{
-        //    Debug.Log("player : " + player.playerType);
-        //    if(player.playerType == PlayerType.participant)
-        //    {
-        //        player.SetPlayerType(PlayerType.thief);
-        //        Debug.Log("Set player thief success : " + player.playerType);
-        //    }
-        //}
         manager.ServerChangeScene(manager.GameplayScene);
         
         StartCoroutine(LoadSceneAsync());
-        
     }
 
     IEnumerator LoadSceneAsync()

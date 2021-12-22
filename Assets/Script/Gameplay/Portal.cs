@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    private BoxCollider2D collider;
-    private SpriteRenderer sprite;
-
-    private void Start()
-    {
-        collider = GetComponent<BoxCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-    }
-
     public void OpenPortal()
     {
-        collider.enabled = false;
-        sprite.enabled = false;
+        var colliders = GetComponents<BoxCollider>();
+        foreach (var col in colliders)
+        {
+            col.enabled = false;
+        }
     }
 }

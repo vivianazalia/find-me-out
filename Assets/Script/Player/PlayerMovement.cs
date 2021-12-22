@@ -84,7 +84,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void handleHorizontalMovement()
     {
-        Vector3 move = (cameraMain.forward * inputManager.LeftStickInput.y + cameraMain.right * inputManager.LeftStickInput.x);
+        Vector3 move = cameraMain.forward * inputManager.LeftStickInput.y + cameraMain.right * inputManager.LeftStickInput.x;
         move.y = 0f;
         if (inputManager.IsRunPressed)
         {

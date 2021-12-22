@@ -89,7 +89,7 @@ public class InGameCharacterPlayer : MyPlayer
         if (hasAuthority)
         {
             var myRoomPlayer = PlayerRoom.instance;
-            SetCameraTransform(gameObject);
+            //SetCameraTransform(gameObject);
             CmdSetPlayerCharacter(myRoomPlayer.nickname);
             SetUI();
         }
@@ -270,7 +270,7 @@ public class InGameCharacterPlayer : MyPlayer
 
         NetworkServer.ReplacePlayerForConnection(oldPlayerConn, newPlayer, true);
 
-        RpcSetCameraTransform(newPlayer.GetComponent<NetworkIdentity>().connectionToClient);
+        //RpcSetCameraTransform(newPlayer.GetComponent<NetworkIdentity>().connectionToClient);
 
         StartCoroutine(DestroyPlayerDelay(.2f));
 

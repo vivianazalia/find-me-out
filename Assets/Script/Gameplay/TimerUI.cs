@@ -12,12 +12,12 @@ public class TimerUI : MonoBehaviour
 
     private void Update()
     {
-        //minutes = GameManager.instance.minutes;
-        //seconds = GameManager.instance.seconds;
-        if(seconds < 10)
+        minutes = GameManager.Instance.minutes;
+        seconds = GameManager.Instance.seconds;
+        if (seconds < 10)
         {
             timerText.text = ((int)minutes).ToString() + ":" + "0" + ((int)seconds).ToString();
-        } 
+        }
         else
         {
             timerText.text = ((int)minutes).ToString() + ":" + ((int)seconds).ToString();

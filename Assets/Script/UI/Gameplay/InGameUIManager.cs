@@ -8,13 +8,13 @@ public class InGameUIManager : MonoBehaviour
     public static InGameUIManager instance;
 
     [SerializeField] private ShootButtonUI shootButton;
-    [SerializeField] private BomButtonUI bomButton;
+    [SerializeField] private BombButtonUI bomButton;
     //[SerializeField] private BulletUI bulletCount;
     [SerializeField] private HealthUI healthBar;
     [SerializeField] private GameObject panelWin;
     [SerializeField] private GameObject panelLose;
     public ShootButtonUI ShootButton { get { return shootButton; } }
-    public BomButtonUI BomButton { get { return bomButton; } }
+    public BombButtonUI BomButton { get { return bomButton; } }
     //public BulletUI BulletCount { get { return bulletCount; } }
     public HealthUI HealthBar { get { return healthBar; } }
     public GameObject PanelWin { get { return panelWin; } }

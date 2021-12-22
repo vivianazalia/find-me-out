@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BomButtonUI : MonoBehaviour
+public class BombButtonUI : MonoBehaviour
 {
-    [SerializeField] Button shootButton;
+    [SerializeField] Button bombButton;
     [SerializeField] TMP_Text cooldownText;
 
     private InGameCharacterPlayer targetPlayer;
@@ -29,7 +29,7 @@ public class BomButtonUI : MonoBehaviour
 
     public void Interactable(bool interact)
     {
-        shootButton.interactable = interact;
+        bombButton.interactable = interact;
     }
 
     private void Update()
@@ -47,12 +47,12 @@ public class BomButtonUI : MonoBehaviour
             if (!targetPlayer.CanThrowBom)
             {
                 cooldownText.text = targetPlayer.BomCooldown > 0 ? ((int)targetPlayer.BomCooldown).ToString() : "";
-                shootButton.interactable = false;
+                bombButton.interactable = false;
             }
             else
             {
                 cooldownText.text = "";
-                shootButton.interactable = true;
+                bombButton.interactable = true;
             }
         }
     }

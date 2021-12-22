@@ -161,7 +161,6 @@ public class GameManager : NetworkBehaviour
     {
         foreach (var player in players)
         {
-            //Debug.Log("Spawn player ulang : " + player.playerType);
             if (player.playerType == PlayerType.thief)
             {
                 player.ReplacePlayer(2);
