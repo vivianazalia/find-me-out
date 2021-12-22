@@ -10,6 +10,8 @@ public class LobbyUI : NetworkBehaviour
     public static LobbyUI instance;
 
     [SerializeField] private Button startGameButton;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private Slider loadingBar;
 
     [SerializeField]
     private GameLobbyPlayerCounter gameLobbyPlayerCounter;
@@ -41,6 +43,37 @@ public class LobbyUI : NetworkBehaviour
         }
 
         var manager = NetworkManager.singleton as NetworkManagerLobby;
+        //for (int i = 0; i < manager.policeCount; i++)
+        //{
+        //    Debug.Log("Looping ke-" + i);
+        //    int rand = Random.Range(0, players.Length);
+        //    players[rand].SetPlayerType(PlayerType.police);
+        //    Debug.Log(rand + " Masukk sini");
+        //}
+        //
+        //foreach(var player in players)
+        //{
+        //    Debug.Log("player : " + player.playerType);
+        //    if(player.playerType == PlayerType.participant)
+        //    {
+        //        player.SetPlayerType(PlayerType.thief);
+        //        Debug.Log("Set player thief success : " + player.playerType);
+        //    }
+        //}
         manager.ServerChangeScene(manager.GameplayScene);
+        
+        StartCoroutine(LoadSceneAsync());
+        
+    }
+
+    IEnumerator LoadSceneAsync()
+    {
+        loadingPanel.SetActive(true);
+        while (!NetworkManager.loadingSceneAsync.isDone)
+        {
+            float progress = Mathf.Clamp01(NetworkManager.loadingSceneAsync.progress / .9f);
+            loadingBar.value = progress;
+            yield return null;
+        }
     }
 }

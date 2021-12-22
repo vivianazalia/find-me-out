@@ -6,10 +6,23 @@ using TMPro;
 
 public class PlayerRoom : NetworkRoomPlayer
 {
+    public static PlayerRoom instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
     [SyncVar]
     public string nickname;
 
-    public PlayerMovement lobbyPlayerMovement;
+    [SyncVar]
+    public PlayerType playerType;
+
+    public MyPlayer lobbyPlayerMovement;
 
     private void Start()
     {
@@ -32,7 +45,7 @@ public class PlayerRoom : NetworkRoomPlayer
     {
         Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
 
-        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent<LobbyPlayerMovement>();
+        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent <LobbyPlayerMovement>();
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         player.ownerNetId = netId;
     }
@@ -42,6 +55,17 @@ public class PlayerRoom : NetworkRoomPlayer
     {
         nickname = nick;
         lobbyPlayerMovement.nickname = nick;
+    }
+
+    public void SetPlayerType(PlayerType type)
+    {
+        CmdSetPlayerType(type);
+    }
+
+    [Command (requiresAuthority = false)]
+    private void CmdSetPlayerType(PlayerType type)
+    {
+        playerType = type;
     }
 
     private void OnDestroy()

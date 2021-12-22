@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyPlayerMovement : PlayerMovement
+public class LobbyPlayerMovement : MyPlayer
 {
     [SyncVar (hook = nameof(SetOwnerNetId_Hook))]
     public uint ownerNetId;
@@ -20,5 +20,4 @@ public class LobbyPlayerMovement : PlayerMovement
             }
         }
     }
-
 }

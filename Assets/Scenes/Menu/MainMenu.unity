@@ -7112,14 +7112,13 @@ MonoBehaviour:
   transport: {fileID: 1369758511}
   networkAddress: localhost
   maxConnections: 0
-  disconnectInactiveConnections: 0
-  disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 2860298106906276054, guid: f2c99ac2cfe15dd4d8b3bbe1279bb2a0, type: 3}
+  playerPrefab: {fileID: 4179241285056887909, guid: da6f9c4beca0a8242b2dbebdef8ff5fd, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 909176101260331642, guid: 9e41d526727e9654c996692fb9b323ce, type: 3}
+  - {fileID: 7208747618135213085, guid: f04e54419e0bf5c43adb3e8a65dda39e, type: 3}
+  - {fileID: 4618894344830547564, guid: dbbbfa46a4203534da90fefde6d99754, type: 3}
   showRoomGUI: 0
   minPlayers: 0
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
@@ -7128,6 +7127,7 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
+  policeCount: 0
 --- !u!4 &1369758513
 Transform:
   m_ObjectHideFlags: 0
@@ -9014,16 +9014,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1881443478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &1881443480
 MonoBehaviour:
   m_ObjectHideFlags: 0
