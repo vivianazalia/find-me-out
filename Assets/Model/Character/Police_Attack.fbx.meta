@@ -51,7 +51,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftLowerArm' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -59,7 +60,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -113,7 +114,167 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Police_Attack(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature.003
+      parentName: Police_Attack(Clone)
+      position: {x: 0, y: 0.748488, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Bone
+      parentName: Armature.003
+      position: {x: -0, y: 0, z: 0.000274557}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.003
+      parentName: Bone
+      position: {x: -0, y: 0.00517694, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.002
+      parentName: Bone.003
+      position: {x: -0, y: 0.00517694, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.001
+      parentName: Bone.002
+      position: {x: -0, y: 0.005176941, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.001_end
+      parentName: Bone.001
+      position: {x: -0, y: 0.005176941, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Bahu.L
+      parentName: Bone.003
+      position: {x: -0, y: 0.00517694, z: 0}
+      rotation: {x: 0.00000013499194, y: -0.00000013364293, z: 0.7191292, w: 0.6948764}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Bahu.L_end
+      parentName: Bone.Bahu.L
+      position: {x: -0, y: 0.006486435, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Lengan.L
+      parentName: Bone.003
+      position: {x: -0.0074995016, y: 0.0047956095, z: -5.123512e-11}
+      rotation: {x: 0.0000004172326, y: -0.0000003278256, z: 0.80864835, w: 0.58829236}
+      scale: {x: 0.99999964, y: 0.99999994, z: 1}
+    - name: Bone.Tangan.L
+      parentName: Bone.Lengan.L
+      position: {x: -3.6859404e-16, y: 0.0030152004, z: -6.3948843e-16}
+      rotation: {x: -0.00000014285656, y: -0.00000009572249, z: -0.12041024, w: 0.99272424}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Tangan.L_end
+      parentName: Bone.Tangan.L
+      position: {x: -0, y: 0.0030152001, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Bahu.R
+      parentName: Bone.003
+      position: {x: -0, y: 0.00517694, z: 0}
+      rotation: {x: 0.00000013499194, y: 0.00000013364293, z: -0.7191292, w: 0.6948764}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Bahu.R_end
+      parentName: Bone.Bahu.R
+      position: {x: -0, y: 0.006486435, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Lengan.R
+      parentName: Bone.003
+      position: {x: 0.0074995016, y: 0.0047956095, z: -5.123512e-11}
+      rotation: {x: -0.0000004172326, y: -0.0000003278256, z: 0.80864835, w: -0.58829236}
+      scale: {x: 0.99999964, y: 0.99999994, z: 1}
+    - name: Bone.Tangan.R
+      parentName: Bone.Lengan.R
+      position: {x: 3.6859404e-16, y: 0.0030152004, z: -6.3948843e-16}
+      rotation: {x: -0.00000014285656, y: 0.00000009572249, z: 0.12041024, w: 0.99272424}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Tangan.R_end
+      parentName: Bone.Tangan.R
+      position: {x: -0, y: 0.0030152001, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Pinggang.L
+      parentName: Armature.003
+      position: {x: -0.0008389273, y: 1.5370545e-11, z: 0.00034319743}
+      rotation: {x: -0.08591605, y: 0.7018678, z: -0.7018677, w: -0.08591699}
+      scale: {x: 0.9999999, y: 0.9999998, z: 1}
+    - name: Bone.Paha.L
+      parentName: Bone.Pinggang.L
+      position: {x: -3.725279e-11, y: 0.003938563, z: 1.3322676e-17}
+      rotation: {x: -0.05372067, y: -0.044756234, z: 0.241212, w: 0.96795034}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bone.Kaki.L
+      parentName: Bone.Paha.L
+      position: {x: -2.7939587e-10, y: 0.0032231463, z: -1.0658141e-16}
+      rotation: {x: -0.016994769, y: -0.5479077, z: -0.1429535, w: 0.82405865}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Kaki.L_end
+      parentName: Bone.Kaki.L
+      position: {x: -0, y: 0.0032231458, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Pinggang.R
+      parentName: Armature.003
+      position: {x: 0.0008389273, y: 1.5370545e-11, z: 0.00034319743}
+      rotation: {x: 0.08591605, y: 0.7018678, z: -0.7018677, w: 0.08591699}
+      scale: {x: 0.9999999, y: 0.9999998, z: 1}
+    - name: Bone.Paha.R
+      parentName: Bone.Pinggang.R
+      position: {x: 3.725279e-11, y: 0.003938563, z: 1.3322676e-17}
+      rotation: {x: -0.05372067, y: 0.044756234, z: -0.241212, w: 0.96795034}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bone.Kaki.R
+      parentName: Bone.Paha.R
+      position: {x: 2.7939587e-10, y: 0.0032231463, z: -1.0658141e-16}
+      rotation: {x: -0.016994769, y: 0.5479077, z: 0.1429535, w: 0.82405865}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.Kaki.R_end
+      parentName: Bone.Kaki.R
+      position: {x: -0, y: 0.0032231458, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cone
+      parentName: Police_Attack(Clone)
+      position: {x: 1.3598204, y: 0.8505122, z: 0.25694627}
+      rotation: {x: 0.31259593, y: 0.38709724, z: -0.028806284, w: 0.86695427}
+      scale: {x: 2.2242968, y: 2.2242968, z: 3.2194648}
+    - name: Cube.004
+      parentName: Police_Attack(Clone)
+      position: {x: 1.2370933, y: 0.8075775, z: 0.120571665}
+      rotation: {x: -0.5573725, y: 0.2347619, z: 0.30912933, w: 0.73393583}
+      scale: {x: 8.772379, y: 12.269938, z: 12.269938}
+    - name: Cylinder
+      parentName: Police_Attack(Clone)
+      position: {x: 1.4762713, y: 1.0202156, z: 0.4222862}
+      rotation: {x: 0.12484923, y: 0.38458917, z: 0.052585717, w: 0.9130929}
+      scale: {x: 10.227757, y: 10.227758, z: 46.638477}
+    - name: Cylinder.001
+      parentName: Police_Attack(Clone)
+      position: {x: 1.5198479, y: 0.93226445, z: 0.44195065}
+      rotation: {x: 0.12484914, y: 0.3845891, z: 0.052585736, w: 0.9130929}
+      scale: {x: 7.664325, y: 7.664326, z: 34.949253}
+    - name: Torus
+      parentName: Police_Attack(Clone)
+      position: {x: 1.3276036, y: 0.89442945, z: 0.23652643}
+      rotation: {x: -0.1755344, y: -0.3529693, z: 0.6127093, w: 0.68497276}
+      scale: {x: 11.400956, y: 11.400956, z: 11.400956}
+    - name: Sphere.002
+      parentName: Police_Attack(Clone)
+      position: {x: -0, y: 1.7865826, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 68.144135, y: 68.144135, z: 68.144135}
+    - name: Cube.003
+      parentName: Police_Attack(Clone)
+      position: {x: -0, y: 1.3, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 129.12552}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -124,7 +285,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

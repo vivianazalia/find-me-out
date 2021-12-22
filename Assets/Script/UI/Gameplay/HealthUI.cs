@@ -2,28 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
 
-public class HealthUI : UI
+public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private GameObject healthUI;
-    [SerializeField] private Slider healthValue;
+    private InGameCharacterPlayer targetPlayer;
 
-    private InGamePlayerMovement player;
-
-    public override void Show(InGamePlayerMovement target)
+    [SerializeField] private Image healthBar;
+    public void Hide()
     {
-        healthUI.SetActive(true);
-        player = target;
+        gameObject.SetActive(false);
+        //targetPlayer = player;
     }
 
-    //[TargetRpc]
-    public void UpdateUI()
+    public void Show(InGameCharacterPlayer player)
     {
-        PlayerThief p = player.GetComponent<PlayerThief>();
-        if(p != null)
+        gameObject.SetActive(true);
+        targetPlayer = player;
+    }
+
+    public void UpdateHealthBar(float health)
+    {
+        healthBar.fillAmount = health;
+        if (health > .5f)
         {
-            healthValue.value = p.GetCurrentHealth();
+            healthBar.color = Color.green;
+        }
+        else if (health > .2f)
+        {
+            healthBar.color = Color.yellow;
+        }
+        else if (health > 0)
+        {
+            healthBar.color = Color.red;
         }
     }
 }

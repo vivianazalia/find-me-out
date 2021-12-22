@@ -22,7 +22,7 @@ public class PlayerRoom : NetworkRoomPlayer
     [SyncVar]
     public PlayerType playerType;
 
-    public PlayerMovement lobbyPlayerMovement;
+    public MyPlayer lobbyPlayerMovement;
 
     private void Start()
     {
@@ -45,7 +45,7 @@ public class PlayerRoom : NetworkRoomPlayer
     {
         Vector3 spawnPos = FindObjectOfType<SpawnPosition>().GetSpawnPosition();
 
-        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent<LobbyPlayerMovement>();
+        var player = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[0], spawnPos, Quaternion.identity).GetComponent <LobbyPlayerMovement>();
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         player.ownerNetId = netId;
     }

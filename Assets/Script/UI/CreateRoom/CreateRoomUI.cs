@@ -13,7 +13,12 @@ public class CreateRoomUI : NetworkBehaviour
 
     [SerializeField] private List<Button> maxPlayerCountButtons;
 
+    public List<Button> GetChooseMapButton { get { return chooseMapButtons; } }
+    public List<Button> GetPoliceCountButton { get { return policeCountButtons; } }
+
     private CreateGameRoomData roomData;
+
+    public static CreateGameRoomData GetRoomData { get; set; }
 
     [Scene]
     public List<string> gameplaySceneList = new List<string>();

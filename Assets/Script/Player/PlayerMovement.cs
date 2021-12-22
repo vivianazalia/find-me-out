@@ -2,128 +2,127 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using TMPro;
-
-public enum PlayerType
-{
-    participant,
-    police,
-    thief
-}
-
-public struct Player : NetworkMessage
-{
-    PlayerType type;
-}
 
 public class PlayerMovement : NetworkBehaviour
 {
-    public float speed;
-    private Vector3 movement;
+    PlayerSettings playerSettings;
+    InputManager inputManager;
+    CharacterController characterController;
+    Transform cameraMain;
+    Transform child;
 
-    private Camera mainCam;
-    private Vector3 camPos;
+    CameraLook cam;
 
-    private float camLeftMax = -6.41f;
-    private float camRightMax = 6.41f;
-    private float camTopMax = 3.66f;
-    private float camButtomMax = -3.68f;
+    [SerializeField] GameObject footstepPrefab;
+    public int footstepLimit = 20;
 
-    [SyncVar(hook = nameof(SetNickname_Hook))]
-    public string nickname;
-    [SerializeField]
-    private TMP_Text nicknameText;
+    Vector3 verticalMove;
 
-    [SerializeField] protected Animator anim;
+    public bool IsEnabled = true;
 
-    public void SetNickname_Hook(string oldValue, string newValue)
+    void Awake()
     {
-        nicknameText.text = newValue;
+        playerSettings = GetComponent<PlayerSettings>();
+        inputManager = GetComponent<InputManager>();
+        characterController = GetComponent<CharacterController>();
+        child = transform.GetChild(0).transform;
+        cam = FindObjectOfType<CameraLook>();
     }
 
-    protected virtual void Start()
+    private void Start()
     {
         if (hasAuthority)
         {
-            Camera cam = Camera.main;
-            cam.transform.SetParent(transform);
-            cam.transform.localPosition = new Vector3(transform.position.x, cam.transform.position.y, cam.transform.position.z);
-            cam.transform.localScale = new Vector3(1, 1, 1);
+            cameraMain = Camera.main.transform;
+            cam.SetPlayerTarget(transform);
         }
+        
+    }
 
-        if (isLocalPlayer)
+    void Update()
+    {
+        if (IsEnabled) Tick();
+    }
+
+    public void Tick()
+    {
+        handleHorizontalMovement();
+        handleVerticalMovement();
+        handleRotation();
+
+        //Tiap 0.5 detik, instantiate Footstep di bawah
+
+    }
+
+    float timer = 0;
+    int footstepSpawned = 0;
+    void SpawnFootstep(float time)
+    {
+        if (footstepSpawned > footstepLimit)
         {
-            Debug.Log("ID : " + netId);
+            return;
+        }
+        timer += Time.deltaTime;
+        if (timer >= time && characterController.isGrounded)
+        {
+            // Instantiate object here
+            Instantiate(footstepPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            // set timer to 0 to start countdown again
+            timer = 0f;
+            footstepSpawned++;
         }
     }
 
-    private void Update()
+    void handleRotation()
     {
-        if (!hasAuthority) return;
-
-        PlayerMove();
-
-        //CameraPosition();
+        if (inputManager.IsMovePressed)
+        {
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(child.localEulerAngles.x, cameraMain.localEulerAngles.y, child.localEulerAngles.z));
+            child.rotation = Quaternion.Lerp(child.rotation, targetRotation, Time.deltaTime * playerSettings.rotationSpeed);
+        }
     }
 
-    private void CameraPosition()
+    void handleHorizontalMovement()
     {
-        camPos = new Vector3(mainCam.transform.position.x, mainCam.transform.position.y, mainCam.transform.position.z);
-
-        if (camPos.x > camRightMax && camPos.y > camTopMax)
+        Vector3 move = (cameraMain.forward * inputManager.LeftStickInput.y + cameraMain.right * inputManager.LeftStickInput.x);
+        move.y = 0f;
+        if (inputManager.IsRunPressed)
         {
-            camPos = new Vector3(camRightMax, camTopMax, mainCam.transform.position.z);
-        }
-        else if (camPos.x < camLeftMax && camPos.y > camTopMax)
-        {
-            camPos = new Vector3(camLeftMax, camTopMax, mainCam.transform.position.z);
-        }
-        else if (camPos.x > camRightMax && camPos.y < camButtomMax)
-        {
-            camPos = new Vector3(camRightMax, camButtomMax, mainCam.transform.position.z);
-        }
-        else if (camPos.x < camLeftMax && camPos.y < camButtomMax)
-        {
-            camPos = new Vector3(camLeftMax, camButtomMax, mainCam.transform.position.z);
-        }
-        else if (camPos.x > camRightMax)
-        {
-            camPos = new Vector3(camRightMax, transform.position.y, mainCam.transform.position.z);
-        }
-        else if (camPos.x < camLeftMax)
-        {
-            camPos = new Vector3(camLeftMax, transform.position.y, mainCam.transform.position.z);
-        }
-        else if (camPos.y > camTopMax)
-        {
-            camPos = new Vector3(transform.position.x, camTopMax, mainCam.transform.position.z);
-        }
-        else if (camPos.y < camButtomMax)
-        {
-            camPos = new Vector3(transform.position.x, camButtomMax, mainCam.transform.position.z);
-        }
-
-        mainCam.transform.position = camPos;
-    }
-
-    private Vector3 GetInput()
-    {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.z = Input.GetAxisRaw("Vertical");
-
-        return movement;
-    }
-
-    private void PlayerMove()
-    {
-        if(GetInput() == Vector3.zero)
-        {
-            anim.SetBool("isWalk", false);
+            characterController.Move(move * Time.deltaTime * playerSettings.runSpeed);
+            //SpawnFootstep(0.2f);
         }
         else
         {
-            anim.SetBool("isWalk", true);
+            characterController.Move(move * Time.deltaTime * playerSettings.walkSpeed);
+            //SpawnFootstep(0.5f);
         }
-        transform.position += GetInput() * speed * Time.deltaTime;
+    }
+
+    void handleVerticalMovement()
+    {
+        if (characterController.isGrounded && verticalMove.y < 0)
+        {
+            verticalMove.y = 0f;
+        }
+        if (inputManager.IsJumpPressed && characterController.isGrounded)
+        {
+            verticalMove.y += Mathf.Sqrt(playerSettings.jumpHeight * -3.0f * playerSettings.gravityValue);
+        }
+        verticalMove.y += playerSettings.gravityValue * Time.deltaTime;
+        characterController.Move(verticalMove * Time.deltaTime);
+    }
+
+    void handleGravity()
+    {
+        if (characterController.isGrounded)
+        {
+            float gravity = -0.1f;
+            inputManager.AddGravity(gravity);
+        }
+        else
+        {
+            float gravity = playerSettings.gravityValue;
+            inputManager.AddGravity(gravity);
+        }
     }
 }
