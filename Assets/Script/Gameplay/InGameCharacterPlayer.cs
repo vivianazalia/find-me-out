@@ -27,7 +27,8 @@ public enum WinLoseState
 
 public class InGameCharacterPlayer : MyPlayer
 {
-    [SerializeField] private PlayerFinder playerFinder;
+    [SerializeField] private PlayerFinder playerFinder = null;
+    [SerializeField] private ObjectFinder objectFinder = null;
 
     [SyncVar]
     private float bomCooldown;
@@ -203,9 +204,12 @@ public class InGameCharacterPlayer : MyPlayer
     public void Shoot()
     {
         StartCoroutine(IsAttack(.2f));
-        if (playerFinder.GetFirstTarget() != null)
+        if (playerFinder)
         {
-            CmdShoot(playerFinder.GetFirstTarget().netId);
+            if (playerFinder.GetFirstTarget() != null)
+            {
+                CmdShoot(playerFinder.GetFirstTarget().netId);
+            }
         }
         shootCooldown = GameManager.Instance.shootCooldown;
     }
@@ -261,13 +265,16 @@ public class InGameCharacterPlayer : MyPlayer
     [Command]
     private void CmdHide(int index)
     {
-        ObjectForHide target = playerFinder.GetTargetHide();
-
-        if (target != null)
+        if (objectFinder)
         {
-            ReplacePlayer(index);
-            CmdSetType(PlayerType.thief);
-            Debug.Log("Success Hide");
+            ObjectForHide target = objectFinder.GetTargetHide();
+
+            if (target != null)
+            {
+                ReplacePlayer(index);
+                CmdSetType(PlayerType.thief);
+                Debug.Log("Success Hide");
+            }
         }
     }
 
@@ -289,7 +296,7 @@ public class InGameCharacterPlayer : MyPlayer
         {
             if (playerType == PlayerType.thief)
             {
-                foreach (var obj in playerFinder.objects)
+                foreach (var obj in objectFinder.objects)
                 {
                     obj.PopupText.gameObject.SetActive(isShow);
                 }
@@ -303,9 +310,10 @@ public class InGameCharacterPlayer : MyPlayer
     [ClientRpc]
     public void RpcDead(InGameCharacterPlayer player)
     {
-        player.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
-        player.playerFinder.GetComponent<CircleCollider2D>().enabled = false;
-        player.GetComponent<BoxCollider2D>().enabled = false;
+        player.nicknameText.color = Color.red;
+        //player.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
+        //player.playerFinder.GetComponent<CircleCollider2D>().enabled = false;
+        //player.GetComponent<BoxCollider2D>().enabled = false;
         player.playerType = PlayerType.viewer;
         GameManager.Instance.RemoveFromThiefList(player);
     }

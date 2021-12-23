@@ -1933,7 +1933,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6715849434642141939}
-  - component: {fileID: 4844634747389612360}
   - component: {fileID: 3268353170424436593}
   m_Layer: 0
   m_Name: PlayerFinder
@@ -1956,20 +1955,6 @@ Transform:
   m_Father: {fileID: 3653674265645295327}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4844634747389612360
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9094391180530142807}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 3.74
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.58, z: 0}
 --- !u!114 &3268353170424436593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1982,5 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009884f92ac24714ebc0a1605ff73396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletTransform: {fileID: 4957591588781686618}
+  range: 1
   targets: []
   objects: []

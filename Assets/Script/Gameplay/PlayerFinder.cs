@@ -4,15 +4,58 @@ using UnityEngine;
 
 public class PlayerFinder : MonoBehaviour
 {
-    private CircleCollider2D circleCollider;
+    public float range;
     public List<InGameCharacterPlayer> targets = new List<InGameCharacterPlayer>();
 
     public List<ObjectForHide> objects = new List<ObjectForHide>();
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        circleCollider = GetComponent<CircleCollider2D>();
+        AddTarget();
+    }
+
+    private void OnDrawGizmos()
+    {
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(transform.position, transform.forward, out hit, range);
+
+        if (isHit)
+        {
+            Gizmos.color = Color.red;
+            Debug.DrawRay(transform.position, transform.forward * hit.distance * -1);
+            Debug.Log("hit name : " + hit.transform.gameObject.name);
+        }
+        else
+        {
+            Gizmos.color = Color.green;
+            Debug.DrawRay(transform.position, transform.forward * range * -1);
+        }
+    }
+
+    public void AddTarget()
+    {
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+
+        if (isHit)
+        {
+            InGameCharacterPlayer target = hit.transform.GetComponent<InGameCharacterPlayer>();
+            if (target != null && target.playerType == PlayerType.thief)
+            {
+                if (!targets.Contains(target))
+                {
+                    targets.Add(target);
+                }
+            }
+        }
+        
+        if(!isHit || hit.transform.GetComponent<InGameCharacterPlayer>() == null)
+        {
+            if(targets.Count > 0)
+            {
+                targets.Clear();
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,7 +111,6 @@ public class PlayerFinder : MonoBehaviour
                     pilot.ShowPopUpTextObjectForHide(false);
                     objects.Remove(obj);
                     obj.RemoveTargetPlayer(pilot);
-                    //obj.PopupText.gameObject.SetActive(false);
                 }
             }
         }
@@ -85,23 +127,6 @@ public class PlayerFinder : MonoBehaviour
             {
                 dist = newDist;
                 closeTarget = player;
-            }
-        }
-
-        return closeTarget;
-    }
-
-    public ObjectForHide GetTargetHide()
-    {
-        float dist = float.MaxValue;
-        ObjectForHide closeTarget = null;
-        foreach (var obj in objects)
-        {
-            float newDist = Vector2.Distance(transform.position, obj.transform.position);
-            if (newDist < dist)
-            {
-                dist = newDist;
-                closeTarget = obj;
             }
         }
 

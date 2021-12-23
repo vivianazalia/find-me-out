@@ -9,7 +9,7 @@ public class MyPlayer : NetworkBehaviour
     [SyncVar(hook = nameof(SetNickname_Hook))]
     public string nickname;
     [SerializeField]
-    private TMP_Text nicknameText;
+    protected TMP_Text nicknameText;
 
     protected Animator anim;
 

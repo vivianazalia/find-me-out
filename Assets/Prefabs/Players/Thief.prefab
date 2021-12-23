@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8973732892671663340}
-  - component: {fileID: 1838769860190180615}
-  - component: {fileID: 7949166485962018520}
+  - component: {fileID: 1776891831495688697}
   m_Layer: 0
-  m_Name: PlayerFinder
+  m_Name: ObjectFinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,21 +31,7 @@ Transform:
   m_Father: {fileID: 5427483255762791638}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1838769860190180615
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559723953174977481}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 3.34
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7949166485962018520
+--- !u!114 &1776891831495688697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,10 +40,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 559723953174977481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 009884f92ac24714ebc0a1605ff73396, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f367d9a466350144baf1b951f5267ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
+  range: 1
   objects: []
 --- !u!1 &1731707260523578266
 GameObject:
@@ -377,6 +362,7 @@ GameObject:
   - component: {fileID: -3443333929178464684}
   - component: {fileID: -525862365141687560}
   - component: {fileID: -5545955732379363471}
+  - component: {fileID: 197553326691946485}
   m_Layer: 3
   m_Name: Thief
   m_TagString: Untagged
@@ -483,7 +469,8 @@ MonoBehaviour:
   syncInterval: 0.1
   nickname: 
   nicknameText: {fileID: 5294901961421778273}
-  playerFinder: {fileID: 7949166485962018520}
+  playerFinder: {fileID: 0}
+  objectFinder: {fileID: 1776891831495688697}
   health: 0
   state: 0
   playerType: 1
@@ -566,6 +553,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2614368961be3c24185261f3142a9e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &197553326691946485
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618894344830547564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.92
+  m_Height: 2.8200846
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6581117, z: -0}
 --- !u!1 &4686652729743374002
 GameObject:
   m_ObjectHideFlags: 0

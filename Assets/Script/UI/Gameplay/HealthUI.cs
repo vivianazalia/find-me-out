@@ -8,6 +8,7 @@ public class HealthUI : MonoBehaviour
     private InGameCharacterPlayer targetPlayer;
 
     [SerializeField] private Image healthBar;
+    [SerializeField] private Slider slider;
     public void Hide()
     {
         gameObject.SetActive(false);
@@ -22,7 +23,8 @@ public class HealthUI : MonoBehaviour
 
     public void UpdateHealthBar(float health)
     {
-        healthBar.fillAmount = health;
+        //healthBar.fillAmount = health;
+        slider.value = health;
         if (health > .5f)
         {
             healthBar.color = Color.green;
