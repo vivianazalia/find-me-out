@@ -11,7 +11,7 @@ public class MyPlayer : NetworkBehaviour
     [SerializeField]
     private TMP_Text nicknameText;
 
-    Animator anim;
+    protected Animator anim;
 
     public virtual void Start()
     {

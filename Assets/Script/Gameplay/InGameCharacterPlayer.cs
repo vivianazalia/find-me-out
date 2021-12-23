@@ -45,31 +45,11 @@ public class InGameCharacterPlayer : MyPlayer
     [SyncVar(hook = nameof(SetIsLose_Hook))]
     public WinLoseState state;
 
-    [SyncVar(hook = nameof(SetPlayerType_Hook))]
+    [SyncVar]
     public PlayerType playerType;
 
     public bool IsShootable { get { return shootCooldown < 0; } }
     public bool CanThrowBom { get { return bomCooldown < 0; } }
-
-    public void SetPlayerType_Hook(PlayerType oldValue, PlayerType newValue)
-    {
-        if (hasAuthority)
-        {
-            //layerData.Type = newValue;
-            //Debug.Log("NetId : " + netId + " Oldvalue : " + oldValue + " New Value : " + newValue);
-
-            //if (newValue == PlayerType.police)
-            //{
-            //    InGameUIManager.instance.ShootButton.Show(this);
-            //    InGameUIManager.instance.ShootButton.Interactable(false);
-            //}
-            //else if(newValue == PlayerType.thief)
-            //{
-            //    InGameUIManager.instance.BomButton.Show(this);
-            //    InGameUIManager.instance.HealthBar.Show(this);
-            //}
-        }
-    }
 
     public void SetIsLose_Hook(WinLoseState oldValue, WinLoseState newValue)
     {
@@ -173,11 +153,7 @@ public class InGameCharacterPlayer : MyPlayer
     {
         if (!hasAuthority) return;
 
-        Debug.Log("Health update : " + health);
-
         CooldownSkill();
-
-        WinLose();
     }
 
     private void CooldownSkill()
@@ -226,7 +202,7 @@ public class InGameCharacterPlayer : MyPlayer
 
     public void Shoot()
     {
-        //StartCoroutine(IsAttack(.2f));
+        StartCoroutine(IsAttack(.2f));
         if (playerFinder.GetFirstTarget() != null)
         {
             CmdShoot(playerFinder.GetFirstTarget().netId);
@@ -241,12 +217,12 @@ public class InGameCharacterPlayer : MyPlayer
         InGameUIManager.instance.HealthBar.UpdateHealthBar(currHealth);
     }
 
-    //private IEnumerator IsAttack(float time)
-    //{
-    //    anim.SetBool("isAttack", true);
-    //    yield return new WaitForSeconds(time);
-    //    anim.SetBool("isAttack", false);
-    //}
+    private IEnumerator IsAttack(float time)
+    {
+        anim.SetBool("isAttack", true);
+        yield return new WaitForSeconds(time);
+        anim.SetBool("isAttack", false);
+    }
     #endregion
 
     #region Bomb
@@ -354,19 +330,6 @@ public class InGameCharacterPlayer : MyPlayer
     {
         Debug.Log(conn.identity.name + " Lose!");
         InGameUIManager.instance.ShowPanelLose();
-    }
-
-    private void WinLose()
-    {
-        var manager = NetworkManager.singleton as NetworkManagerLobby;
-
-        //if (thiefLose.Count == (GameSystem.Instance.GetPlayerList().Count - manager.policeCount))
-        //{
-        //    if(playerType == PlayerType.police)
-        //    {
-        //        isLose = true;
-        //    }
-        //}
     }
     #endregion
 }
