@@ -36,11 +36,11 @@ public class CreateRoomUI : NetworkBehaviour
         {
             if(i == count - 4)
             {
-                maxPlayerCountButtons[i].image.color = new Color(.8f, .8f, .2f, 1f);
+                maxPlayerCountButtons[i].image.color = new Color(.7f, .9f, .4f, 1f);
             }
             else
             {
-                maxPlayerCountButtons[i].image.color = new Color(.8f, .8f, .2f, 0f);
+                maxPlayerCountButtons[i].image.color = new Color(.7f, .9f, .4f, 0f);
             }
         }
 
@@ -59,11 +59,11 @@ public class CreateRoomUI : NetworkBehaviour
         {
             if (i == count - 1)
             {
-                policeCountButtons[i].image.color = new Color(.8f, .8f, .2f, 1f);
+                policeCountButtons[i].image.color = new Color(.7f, .9f, .4f, 1f);
             }
             else
             {
-                policeCountButtons[i].image.color = new Color(.8f, .8f, .2f, 0f);
+                policeCountButtons[i].image.color = new Color(.7f, .9f, .4f, 0f);
             }
         }
 
@@ -88,7 +88,7 @@ public class CreateRoomUI : NetworkBehaviour
             else
             {
                 maxPlayerCountButtons[i].interactable = true;
-                text.color = new Color(.6f, .9f, .9f, 1f);
+                text.color = new Color(.3f, .4f, .06f, 1f);
             }
         }
     }

@@ -57,17 +57,6 @@ public class PlayerRoom : NetworkRoomPlayer
         lobbyPlayerMovement.nickname = nick;
     }
 
-    public void SetPlayerType(PlayerType type)
-    {
-        CmdSetPlayerType(type);
-    }
-
-    [Command (requiresAuthority = false)]
-    private void CmdSetPlayerType(PlayerType type)
-    {
-        playerType = type;
-    }
-
     private void OnDestroy()
     {
         if(LobbyUI.instance != null)

@@ -12,7 +12,8 @@ public class MainMenu : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject panelJoinGame;
     [SerializeField] private GameObject panelMainMenu;
-    [SerializeField] private GameObject panelProfil;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private Slider loadingBar;
     [SerializeField] private GameObject panelSettingGameplay;
     [SerializeField] private TMP_InputField networkAddrField;
     [SerializeField] private GameObject inputNickname;
@@ -60,6 +61,8 @@ public class MainMenu : MonoBehaviour
             networkManager.minPlayers = 1;
             panelSettingGameplay.SetActive(false);
             networkManager.StartHost();
+
+            StartCoroutine(LoadSceneAsync());
         }
         Debug.Log("Host address : " + networkManager.networkAddress);
     }
@@ -70,20 +73,22 @@ public class MainMenu : MonoBehaviour
         {
             if (networkAddrField.text != "")
             {
-                //cek jika kode yang dimasukkan tersedia atau tidak
                 networkManager.networkAddress = networkAddrField.text;
                 networkManager.StartClient();
+
+                StartCoroutine(LoadSceneAsync());
             }
         }
     }
 
-    public void Setting()
+    IEnumerator LoadSceneAsync()
     {
-        Debug.Log("Go to Setting Panel");
-    }
-
-    public void Profil()
-    {
-        panelProfil.SetActive(true);
+        loadingPanel.SetActive(true);
+        while (!NetworkManager.loadingSceneAsync.isDone)
+        {
+            float progress = Mathf.Clamp01(NetworkManager.loadingSceneAsync.progress / .9f);
+            loadingBar.value = progress;
+            yield return null;
+        }
     }
 }
