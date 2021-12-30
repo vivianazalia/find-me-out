@@ -23,16 +23,17 @@ public class ObjectFinder : MonoBehaviour
     private void OnDrawGizmos()
     {
         RaycastHit hit;
-        bool isHit = Physics.Raycast(transform.position, transform.forward, out hit, range);
+        bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
 
         if (isHit)
         {
             Gizmos.color = Color.red;
             Debug.DrawRay(transform.position, transform.forward * hit.distance * -1);
-            Debug.Log("hit name obj : " + hit.transform.gameObject.name);
+            Debug.Log("hit name obj objectFinder : " + hit.transform.gameObject.name);
         }
         else
         {
+            Debug.Log("No Hit obj");
             Gizmos.color = Color.green;
             Debug.DrawRay(transform.position, transform.forward * range * -1);
         }
@@ -70,8 +71,8 @@ public class ObjectFinder : MonoBehaviour
                 {
                     obj.RemoveTargetPlayer(owner);
                 }
-                objects.Clear();
                 owner.ShowPopUpTextObjectForHide(false);
+                objects.Clear();
             }
         }
     }

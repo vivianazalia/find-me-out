@@ -15,7 +15,7 @@ public class MyPlayer : NetworkBehaviour
 
     public virtual void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     public void SetNickname_Hook(string oldValue, string newValue)

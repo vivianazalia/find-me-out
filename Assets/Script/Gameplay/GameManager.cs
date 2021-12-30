@@ -57,6 +57,7 @@ public class GameManager : NetworkBehaviour
         if (!thiefs.Contains(thief))
         {
             thiefs.Add(thief);
+            ThiefCount.instance.thiefCount += 1;
         }
     }
 
@@ -64,7 +65,9 @@ public class GameManager : NetworkBehaviour
     {
         if (thiefs.Contains(thief))
         {
+            Debug.Log("Masuk remove list from player");
             thiefs.Remove(thief);
+            ThiefCount.instance.thiefCount -= 1;
         }
         CheckGameOver();
     }
@@ -182,14 +185,24 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    private IEnumerator ChangeState()
+    {
+        yield return new WaitForSeconds(2f);
+
+        gameState = GameState.Start;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         if (isServer)
         {
-            Debug.Log("MASUKK START IS SERVER");
             StartCoroutine(GameReady());
         }
+
+        gameState = GameState.Prepare;
+
+        StartCoroutine(ChangeState());
     }
 
     private void Update()
@@ -204,71 +217,31 @@ public class GameManager : NetworkBehaviour
             {
                 portal.OpenPortal();
                 isHidingDuration = false;
-                foreach (InGameCharacterPlayer p in players)
-                {
-                    if (p.playerType == PlayerType.police && p.hasAuthority)
-                    {
-                        p.SetInteractableUI(true);
-                    }
-                }
             }
         }
-        else
+        else if(gameState == GameState.Start)
         {
             if (gameplayDuration > 0)
             {
                 gameplayDuration -= Time.deltaTime;
-                //foreach (var player in players)
-                //{
-                //    if (player.playerType == PlayerType.thief)
-                //    {
-                //        if (!player.isLose)
-                //        {
-                //            return;
-                //        }
-                //    }
-                //}
             }
             else
             {
                 gameState = GameState.Over;
-                //foreach(var player in players)
-                //{
-                //    if(player.playerType == PlayerType.thief)
-                //    {
-                //        if (!player.isLose)
-                //        {
-                //            continue;
-                //        }
-                //        player.ShowPanelWin();
-                //    }
-                //    else
-                //    {
-                //        if (player.isLose)
-                //        {
-                //            player.ShowPanelLose();
-                //        }
-                //        else
-                //        {
-                //            player.ShowPanelWin();
-                //        }
-                //    }
-                //}
-                //cek apakah semua thief tertangkap 
-                //jika iya, maka polisi menang 
-                //jika tidak, maka thief menang
                 //display panel win lose
             }
         }
 
         Timer();
 
+        CheckGameOver();
+
         ExitGame();
     }
 
     public void CheckGameOver()
     {
-        if (gameState == GameState.Start && thiefs.Count == 0)
+        if (gameState == GameState.Start && thiefs.Count == 0 && ThiefCount.instance.thiefCount == 0)
         {
             //polisi menang
             foreach (var p in players)
@@ -282,8 +255,10 @@ public class GameManager : NetworkBehaviour
                     p.state = WinLoseState.loser;
                 }
             }
+
+            gameState = GameState.Over;
         }
-        else if (gameState == GameState.Over && thiefs.Count > 0)
+        else if (gameState == GameState.Over && ThiefCount.instance.thiefCount > 0)
         {
             //thief menang
             foreach (var p in players)
@@ -308,11 +283,16 @@ public class GameManager : NetworkBehaviour
             minutes = hidingTime / 60;
             seconds = hidingTime % 60;
         }
-        else
+        else if(gameState == GameState.Start)
         {
             //Debug.Log("is hiding duration : " + isHidingDuration);
             minutes = gameplayDuration / 60;
             seconds = gameplayDuration % 60;
+        }
+        else
+        {
+            minutes = 0;
+            seconds = 0;
         }
     }
 
@@ -327,6 +307,7 @@ public class GameManager : NetworkBehaviour
 
 public enum GameState
 {
+    Prepare,
     Start,
     Over
 }

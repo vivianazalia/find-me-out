@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Mirror;
 
-public class AnimationController : MonoBehaviour //Kamera jangan lupa dilepas dari player
+public class AnimationController : NetworkBehaviour //Kamera jangan lupa dilepas dari player
 {
     InputManager inputManager;
 
@@ -13,7 +14,7 @@ public class AnimationController : MonoBehaviour //Kamera jangan lupa dilepas da
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         inputManager = GetComponent<InputManager>();
 
         //isRunningHash = Animator.StringToHash("isRunning");
@@ -22,7 +23,7 @@ public class AnimationController : MonoBehaviour //Kamera jangan lupa dilepas da
 
     private void Update()
     {
-        handleAnimation();
+        if(hasAuthority) handleAnimation();
     }
 
     public void handleAnimation()

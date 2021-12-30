@@ -30,8 +30,8 @@ public class GameData : NetworkBehaviour
         bomCooldown = 5f;
         shootCooldown = .5f;
         bulletCount = 100;
-        gameplayDuration = 180f;
-        hidingTime = 5f;
+        gameplayDuration = 120f;
+        hidingTime = 10f;
     }
 
     private void Start()

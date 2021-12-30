@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror.Discovery;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManagerLobby networkManager = null;
+    [SerializeField] private NetworkDiscovery networkDiscovery;
 
     [Header("UI")]
     [SerializeField] private GameObject panelJoinGame;
@@ -24,6 +26,7 @@ public class MainMenu : MonoBehaviour
         if(networkManager == null)
         {
             networkManager = FindObjectOfType<NetworkManagerLobby>();
+            networkDiscovery = networkManager.GetComponent<NetworkDiscovery>();
         }
 
         if (!PlayerPrefs.HasKey(PlayerSettings.firstRunAppKey))
@@ -47,6 +50,15 @@ public class MainMenu : MonoBehaviour
         {
             enterRoomButton.gameObject.SetActive(false);
         }
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Quit();
+            }
+        }
+
     }
 
     public void StartGame()
@@ -59,8 +71,10 @@ public class MainMenu : MonoBehaviour
         if(networkManager.maxConnections != 0)
         {
             networkManager.minPlayers = 1;
+            networkManager.networkAddress = "localhost";
             panelSettingGameplay.SetActive(false);
             networkManager.StartHost();
+            networkDiscovery.AdvertiseServer();
 
             StartCoroutine(LoadSceneAsync());
         }
@@ -76,7 +90,7 @@ public class MainMenu : MonoBehaviour
                 networkManager.networkAddress = networkAddrField.text;
                 networkManager.StartClient();
 
-                StartCoroutine(LoadSceneAsync());
+                //StartCoroutine(LoadSceneAsync());
             }
         }
     }
@@ -90,5 +104,16 @@ public class MainMenu : MonoBehaviour
             loadingBar.value = progress;
             yield return null;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        NetworkClient.Disconnect();
+        NetworkManager.singleton.StopClient();
+    }
+
+    private void Quit()
+    {
+        Application.Quit();
     }
 }

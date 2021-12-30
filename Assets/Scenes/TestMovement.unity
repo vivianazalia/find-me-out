@@ -617,7 +617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &234546312
 Transform:
   m_ObjectHideFlags: 0
@@ -1181,6 +1181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d67381e077d3b24ab3e15026e32e981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cinemachine: {fileID: 0}
+  inputManager: {fileID: 0}
+  playerSettings: {fileID: 0}
 --- !u!1 &823299689
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,9 +6,9 @@ using Cinemachine;
 [RequireComponent(typeof(CinemachineFreeLook))]
 public class CameraLook : MonoBehaviour
 {
-    CinemachineFreeLook cinemachine;
-    InputManager inputManager;
-    PlayerSettings playerSettings;
+    public CinemachineFreeLook cinemachine;
+    public InputManager inputManager;
+    public PlayerSettings playerSettings;
 
     // Start is called before the first frame update
     void Awake()

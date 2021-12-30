@@ -107,7 +107,7 @@ public class InGameCharacterPlayer : MyPlayer
         }
         else if (playerType == PlayerType.thief)
         {
-            InGameUIManager.instance.BomButton.Show(this);
+            InGameUIManager.instance.ChangeToThiefButton.Show(this);
             InGameUIManager.instance.HealthBar.Show(this);
         }
     }
@@ -242,15 +242,14 @@ public class InGameCharacterPlayer : MyPlayer
     public void ReplacePlayer(int index)
     {
         var oldPlayerConn = this.connectionToClient;
-        var newPlayer = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[index], transform.position, transform.rotation);
+        var instanceRot = NetworkManagerLobby.singleton.spawnPrefabs[index].transform.rotation;
+        var newPlayer = Instantiate(NetworkManagerLobby.singleton.spawnPrefabs[index], transform.position, instanceRot);
 
         InGameCharacterPlayer player = newPlayer.GetComponent<InGameCharacterPlayer>();
         player.health = health;
         player.playerType = playerType;
 
         NetworkServer.ReplacePlayerForConnection(oldPlayerConn, newPlayer, true);
-
-        //RpcSetCameraTransform(newPlayer.GetComponent<NetworkIdentity>().connectionToClient);
 
         StartCoroutine(DestroyPlayerDelay(.2f));
 
@@ -259,6 +258,12 @@ public class InGameCharacterPlayer : MyPlayer
     IEnumerator DestroyPlayerDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        if (this.playerType == PlayerType.thief)
+        {
+            GameManager.Instance.RemoveFromThiefList(this);
+        }
+
         NetworkServer.Destroy(this.gameObject);
     }
 
@@ -301,6 +306,14 @@ public class InGameCharacterPlayer : MyPlayer
                     obj.PopupText.gameObject.SetActive(isShow);
                 }
             }
+        }
+    }
+
+    public void ChangeToThief()
+    {
+        if (gameObject != NetworkManager.singleton.spawnPrefabs[2])
+        {
+            ReplacePlayer(2);
         }
     }
 

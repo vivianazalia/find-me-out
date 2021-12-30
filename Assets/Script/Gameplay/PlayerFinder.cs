@@ -9,6 +9,8 @@ public class PlayerFinder : MonoBehaviour
 
     public List<ObjectForHide> objects = new List<ObjectForHide>();
 
+    public Transform bulletPos;
+
     private void Update()
     {
         AddTarget();
@@ -17,25 +19,30 @@ public class PlayerFinder : MonoBehaviour
     private void OnDrawGizmos()
     {
         RaycastHit hit;
-        bool isHit = Physics.Raycast(transform.position, transform.forward, out hit, range);
+        //bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+        bool isHit = Physics.SphereCast(transform.position, range, transform.forward * -1, out hit, range);
 
         if (isHit)
         {
             Gizmos.color = Color.red;
             Debug.DrawRay(transform.position, transform.forward * hit.distance * -1);
-            Debug.Log("hit name : " + hit.transform.gameObject.name);
+            Gizmos.DrawWireSphere(transform.position + transform.forward * hit.distance * -1, range);
+            Debug.Log("hit name playerFinder: " + hit.transform.gameObject.name);
         }
         else
         {
+            Debug.Log("No Hit player");
             Gizmos.color = Color.green;
             Debug.DrawRay(transform.position, transform.forward * range * -1);
+            Gizmos.DrawWireSphere(transform.position + transform.forward * range * -1, range);
         }
     }
 
     public void AddTarget()
     {
         RaycastHit hit;
-        bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+        //bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+        bool isHit = Physics.SphereCast(transform.position, range, transform.forward * -1, out hit, range);
 
         if (isHit)
         {
@@ -58,63 +65,63 @@ public class PlayerFinder : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        var player = collision.GetComponent<InGameCharacterPlayer>();
-        //Debug.Log("Collision player : " + player);
-        if (player && player.playerType == PlayerType.thief)
-        {
-            if (!targets.Contains(player))
-            {
-                targets.Add(player);
-            }
-        }
-
-        var obj = collision.GetComponent<ObjectForHide>();
-
-        var pilot = GetComponentInParent<InGameCharacterPlayer>();
-        //Debug.Log("Pilot : " + pilot + " Type : " + pilot.playerType);
-        if (pilot != null && pilot.playerType == PlayerType.thief)
-        {
-            if (obj && collision.tag == "ObjectForHide")
-            {
-                if (!objects.Contains(obj))
-                {
-                    objects.Add(obj);
-                    obj.SetTargetPlayer(pilot);
-                    pilot.ShowPopUpTextObjectForHide(true);
-                }
-            }
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        var player = collision.GetComponent<InGameCharacterPlayer>();
-        if (player && player.playerType == PlayerType.thief)
-        {
-            if (targets.Contains(player))
-            {
-                targets.Remove(player);
-            }
-        }
-
-        var obj = collision.GetComponent<ObjectForHide>();
-        var pilot = GetComponentInParent<InGameCharacterPlayer>();
-        if (pilot != null && pilot.playerType == PlayerType.thief)
-        {
-            if (obj && collision.tag == "ObjectForHide")
-            {
-                if (objects.Contains(obj))
-                {
-                    pilot.ShowPopUpTextObjectForHide(false);
-                    objects.Remove(obj);
-                    obj.RemoveTargetPlayer(pilot);
-                }
-            }
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    var player = collision.GetComponent<InGameCharacterPlayer>();
+    //    //Debug.Log("Collision player : " + player);
+    //    if (player && player.playerType == PlayerType.thief)
+    //    {
+    //        if (!targets.Contains(player))
+    //        {
+    //            targets.Add(player);
+    //        }
+    //    }
+    //
+    //    var obj = collision.GetComponent<ObjectForHide>();
+    //
+    //    var pilot = GetComponentInParent<InGameCharacterPlayer>();
+    //    //Debug.Log("Pilot : " + pilot + " Type : " + pilot.playerType);
+    //    if (pilot != null && pilot.playerType == PlayerType.thief)
+    //    {
+    //        if (obj && collision.tag == "ObjectForHide")
+    //        {
+    //            if (!objects.Contains(obj))
+    //            {
+    //                objects.Add(obj);
+    //                obj.SetTargetPlayer(pilot);
+    //                pilot.ShowPopUpTextObjectForHide(true);
+    //            }
+    //        }
+    //    }
+    //
+    //}
+    //
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    var player = collision.GetComponent<InGameCharacterPlayer>();
+    //    if (player && player.playerType == PlayerType.thief)
+    //    {
+    //        if (targets.Contains(player))
+    //        {
+    //            targets.Remove(player);
+    //        }
+    //    }
+    //
+    //    var obj = collision.GetComponent<ObjectForHide>();
+    //    var pilot = GetComponentInParent<InGameCharacterPlayer>();
+    //    if (pilot != null && pilot.playerType == PlayerType.thief)
+    //    {
+    //        if (obj && collision.tag == "ObjectForHide")
+    //        {
+    //            if (objects.Contains(obj))
+    //            {
+    //                pilot.ShowPopUpTextObjectForHide(false);
+    //                objects.Remove(obj);
+    //                obj.RemoveTargetPlayer(pilot);
+    //            }
+    //        }
+    //    }
+    //}
 
     public InGameCharacterPlayer GetFirstTarget()
     {

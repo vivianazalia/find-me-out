@@ -34,14 +34,13 @@ public class PlayerMovement : NetworkBehaviour
         if (hasAuthority)
         {
             cameraMain = Camera.main.transform;
-            cam.SetPlayerTarget(transform);
+            cam.SetPlayerTarget(this.transform);
         }
-        
     }
 
     void Update()
     {
-        if (IsEnabled) Tick();
+        if (IsEnabled && hasAuthority) Tick();
     }
 
     public void Tick()
@@ -75,6 +74,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void handleRotation()
     {
+        if (cameraMain == null) return;
         if (inputManager.IsMovePressed)
         {
             Quaternion targetRotation = Quaternion.Euler(new Vector3(child.localEulerAngles.x, cameraMain.localEulerAngles.y, child.localEulerAngles.z));
@@ -84,6 +84,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void handleHorizontalMovement()
     {
+        if (cameraMain == null) return;
         Vector3 move = cameraMain.forward * inputManager.LeftStickInput.y + cameraMain.right * inputManager.LeftStickInput.x;
         move.y = 0f;
         if (inputManager.IsRunPressed)

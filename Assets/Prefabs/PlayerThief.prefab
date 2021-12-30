@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 2579438818485038268}
   - component: {fileID: 6253552276171814899}
   - component: {fileID: 6236965634793038802}
+  - component: {fileID: 7311797155119608494}
   m_Layer: 0
   m_Name: PlayerThief
   m_TagString: Untagged
@@ -251,6 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2614368961be3c24185261f3142a9e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &2579438818485038268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,13 +294,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 0.27
+  m_Radius: 0.08
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.09, z: 0}
 --- !u!114 &6236965634793038802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,9 +318,30 @@ MonoBehaviour:
   nickname: 
   nicknameText: {fileID: 3548197560581918128}
   playerFinder: {fileID: 0}
+  objectFinder: {fileID: 8476177486519761314}
   health: 0
   state: 0
-  playerType: 0
+  playerType: 1
+--- !u!114 &7311797155119608494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815249752110924631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9858cebbabcce74fa604676ebf2971c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 2
+  _lookSpeed: 1
+  _rotationSpeed: 4
+  _walkSpeed: 4
+  _runSpeed: 8
+  _gravityValue: -9
+  _jumpHeight: 9
+  role: 0
 --- !u!1 &2033877847170086604
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +726,7 @@ Transform:
   - {fileID: 3200040799086444313}
   - {fileID: 8812224310594546645}
   - {fileID: 7513745862589925597}
+  - {fileID: 1102748673449396518}
   m_Father: {fileID: 5583046842491874611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1083,3 +1108,48 @@ Transform:
   m_Father: {fileID: 2031433873160200481}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8681822039626084365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102748673449396518}
+  - component: {fileID: 8476177486519761314}
+  m_Layer: 0
+  m_Name: ObjectFinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1102748673449396518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681822039626084365}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3680765694471556103}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8476177486519761314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681822039626084365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f367d9a466350144baf1b951f5267ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 1
+  objects: []
