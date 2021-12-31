@@ -14,11 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FBX_Snow/RoomSnow.unity
     guid: be9db93bf417dfe498d922fab6022fd1
-  - enabled: 1
-    path: Assets/Scenes/Gameplay/FBX_Desert/RoomDesert.unity
-    guid: ec636fa66521d954ab42a4aa0f84830d
-  - enabled: 1
-    path: Assets/Scenes/FBX_Autum/AutumScene.unity
-    guid: 0ed1f447d8a1db148ad9f06ea6233ca6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c74661daab33842478ee095b4b723bbc, type: 2}

@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject panelSettingGameplay;
     [SerializeField] private TMP_InputField networkAddrField;
     [SerializeField] private GameObject inputNickname;
+    [SerializeField] private TMP_Text connectingText;
     public Button enterRoomButton;
 
     private void Start()
@@ -49,6 +50,19 @@ public class MainMenu : MonoBehaviour
         else
         {
             enterRoomButton.gameObject.SetActive(false);
+        }
+
+        if (!NetworkClient.isConnected && !NetworkServer.active)
+        {
+            if (!NetworkClient.active)
+            {
+                connectingText.text = "";
+            }
+            else
+            {
+                connectingText.text = "Connecting...";
+            }
+            
         }
 
         if (Application.platform == RuntimePlatform.Android)
@@ -85,13 +99,10 @@ public class MainMenu : MonoBehaviour
     {
         if (!NetworkClient.active)
         {
-            if (networkAddrField.text != "")
-            {
-                networkManager.networkAddress = networkAddrField.text;
-                networkManager.StartClient();
-
-                //StartCoroutine(LoadSceneAsync());
-            }
+            networkManager.networkAddress = networkAddrField.text;
+            networkManager.StartClient();
+            
+            //StartCoroutine(LoadSceneAsync());
         }
     }
 

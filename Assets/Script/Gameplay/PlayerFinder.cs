@@ -27,11 +27,11 @@ public class PlayerFinder : MonoBehaviour
             Gizmos.color = Color.red;
             Debug.DrawRay(transform.position, transform.forward * hit.distance * -1);
             Gizmos.DrawWireSphere(transform.position + transform.forward * hit.distance * -1, range);
-            Debug.Log("hit name playerFinder: " + hit.transform.gameObject.name);
+            //Debug.Log("hit name playerFinder: " + hit.transform.gameObject.name);
         }
         else
         {
-            Debug.Log("No Hit player");
+            //Debug.Log("No Hit player");
             Gizmos.color = Color.green;
             Debug.DrawRay(transform.position, transform.forward * range * -1);
             Gizmos.DrawWireSphere(transform.position + transform.forward * range * -1, range);

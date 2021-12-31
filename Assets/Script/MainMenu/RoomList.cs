@@ -52,13 +52,12 @@ public class RoomList : MonoBehaviour
 
     public void CreateRoom()
     {
-        Debug.Log("craeteroom");
         if (networkManager.maxConnections != 0)
         {
-            networkManager.minPlayers = 2;
+            networkManager.minPlayers = 4;
             panelSettingGameplay.SetActive(false);
             discoveredServers.Clear();
-            networkManager.StartHost();
+            //networkManager.StartServer();
             networkDiscovery.AdvertiseServer();
 
             StartCoroutine(LoadSceneAsync());
@@ -92,16 +91,21 @@ public class RoomList : MonoBehaviour
     //    buttonSelected = button;
     //}
 
-    //public void JoinRoom()
-    //{
-    //    if (!buttonSelected)
-    //    {
-    //        Debug.Log("Please choose room");
-    //        return;
-    //    }
-    //
-    //    Connect(buttonSelected);
-    //}
+    public void JoinRoom()
+    {
+        //if (!buttonSelected)
+        //{
+        //    Debug.Log("Please choose room");
+        //    return;
+        //}
+        //
+        //Connect(buttonSelected);
+        if (!NetworkClient.active)
+        {
+            networkManager.networkAddress = "20.102.124.216";
+            networkManager.StartClient();
+        }
+    }
 
     public void Connect(ButtonRoom button)
     {

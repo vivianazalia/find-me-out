@@ -19,7 +19,18 @@ public class GameLobbyPlayerCounter : NetworkBehaviour
         bool isStartable = players.Length >= minPlayers;
         playerCountText.color = isStartable ? Color.white : Color.red;
         playerCountText.text = players.Length + "/" + maxPlayers;
-        LobbyUI.instance.SetInteractableStartButton(isStartable);
+        //LobbyUI.instance.SetInteractableStartButton(isStartable);
+
+        StartCoroutine(StartGame(isStartable));
+    }
+
+    private IEnumerator StartGame(bool canStart)
+    {
+        yield return new WaitForSeconds(1f);
+        if (canStart)
+        {
+            LobbyUI.instance.OnClickStartButton();
+        }
     }
 
     private void Start()

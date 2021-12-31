@@ -7,6 +7,5 @@ using UnityEngine;
 public class NetworkManagerLobby : NetworkRoomManager
 {
     public GameRuleData gameRuleData;
-    public PlayerThiefMessage playerMessage;
     public int policeCount;
 }

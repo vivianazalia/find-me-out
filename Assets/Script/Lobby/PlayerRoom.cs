@@ -30,7 +30,7 @@ public class PlayerRoom : NetworkRoomPlayer
         if (isServer)
         {
             SpawnLobbyPlayerCharacter();
-            LobbyUI.instance.ActiveStartButton();
+            //LobbyUI.instance.ActiveStartButton();
         }
 
         if (isLocalPlayer)
@@ -54,7 +54,7 @@ public class PlayerRoom : NetworkRoomPlayer
     public void CmdSetNickname(string nick)
     {
         nickname = nick;
-        lobbyPlayerMovement.nickname = nick;
+        //lobbyPlayerMovement.nickname = nick;
     }
 
     private void OnDestroy()

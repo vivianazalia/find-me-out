@@ -94,19 +94,19 @@ public class GameManager : NetworkBehaviour
 
         SetRolePolice();
 
-        yield return new WaitForSeconds(.1f);
+        //yield return new WaitForSeconds(.1f);
 
         SetRoleThief();
 
-        yield return new WaitForFixedUpdate();
+        //yield return new WaitForFixedUpdate();
 
         SetPlayerSpawnPosition();
 
-        yield return new WaitForFixedUpdate();
+        //yield return new WaitForFixedUpdate();
 
         SpawnCharacterPlayer();
 
-        yield return new WaitForSeconds(.5f);
+        //yield return new WaitForSeconds(.5f);
 
         SetCooldownSkillPlayer();
 
@@ -121,7 +121,8 @@ public class GameManager : NetworkBehaviour
             var player = players[Random.Range(0, players.Count)];
             if (player.playerType != PlayerType.police)
             {
-                player.SetType(PlayerType.police);
+                player.playerType = PlayerType.police;
+                //player.SetType(PlayerType.police);
             }
             else
             {
@@ -138,7 +139,8 @@ public class GameManager : NetworkBehaviour
             if (players[i].playerType == PlayerType.participant)
             {
                 //player.playerType = PlayerType.police;
-                players[i].SetType(PlayerType.thief);
+                //players[i].SetType(PlayerType.thief);
+                players[i].playerType = PlayerType.thief;
             }
         }
     }

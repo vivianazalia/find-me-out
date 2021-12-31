@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public struct PlayerThiefMessage : NetworkMessage
-{
-    public string nickname;
-    public float bombCooldown;
-    public float health;
-}
-
 public enum PlayerType
 {
     participant,
@@ -90,6 +83,7 @@ public class InGameCharacterPlayer : MyPlayer
     public void CmdSetType(PlayerType type)
     {
         //Debug.Log("Playertype sblm : " + playerType + " CmdSetType NetId: " + netId + " CmdSetType " + type);
+        
         playerType = type;
     }
 

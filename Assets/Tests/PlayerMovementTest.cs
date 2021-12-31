@@ -9,7 +9,7 @@ public class PlayerMovementTest
     [Test]
     public void PlayerMovementTesting()
     {
-        GameObject player = (GameObject)Object.Instantiate(Resources.Load("Prefabs/PlayerPolice"));
+        GameObject player = (GameObject)Object.Instantiate(Resources.Load("./PlayerPolice"));
         PlayerMovement movement = player.GetComponent<PlayerMovement>();
 
         InputManager inputManager = movement.GetComponent<InputManager>();
