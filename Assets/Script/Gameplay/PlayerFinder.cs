@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerFinder : MonoBehaviour
 {
     public float range;
-    public List<InGameCharacterPlayer> targets = new List<InGameCharacterPlayer>();
+    //public List<InGameCharacterPlayer> targets = new List<InGameCharacterPlayer>();
+
+    public InGameCharacterPlayer playerTarget;
 
     public List<ObjectForHide> objects = new List<ObjectForHide>();
 
@@ -46,23 +48,31 @@ public class PlayerFinder : MonoBehaviour
 
         if (isHit)
         {
-            InGameCharacterPlayer target = hit.transform.GetComponent<InGameCharacterPlayer>();
+            InGameCharacterPlayer target = hit.collider.GetComponent<InGameCharacterPlayer>();
             if (target != null && target.playerType == PlayerType.thief)
             {
-                if (!targets.Contains(target))
-                {
-                    targets.Add(target);
-                }
+                playerTarget = target;
+                //if (!targets.Contains(target))
+                //{
+                //    targets.Add(target);
+                //}
+            }
+        }
+        else
+        {
+            if (playerTarget)
+            {
+                playerTarget = null;
             }
         }
         
-        if(!isHit || hit.transform.GetComponent<InGameCharacterPlayer>() == null)
-        {
-            if(targets.Count > 0)
-            {
-                targets.Clear();
-            }
-        }
+        //if(!isHit || hit.transform.GetComponent<InGameCharacterPlayer>() == null)
+        //{
+        //    if(targets.Count > 0)
+        //    {
+        //        targets.Clear();
+        //    }
+        //}
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
@@ -125,18 +135,24 @@ public class PlayerFinder : MonoBehaviour
 
     public InGameCharacterPlayer GetFirstTarget()
     {
-        float dist = float.MaxValue;
-        InGameCharacterPlayer closeTarget = null;
-        foreach (var player in targets)
+        if (playerTarget)
         {
-            float newDist = Vector2.Distance(transform.position, player.transform.position);
-            if (newDist < dist)
-            {
-                dist = newDist;
-                closeTarget = player;
-            }
+            return playerTarget;
         }
 
-        return closeTarget;
+        return null;
+        //float dist = float.MaxValue;
+        //InGameCharacterPlayer closeTarget = null;
+        //foreach (var player in targets)
+        //{
+        //    float newDist = Vector2.Distance(transform.position, player.transform.position);
+        //    if (newDist < dist)
+        //    {
+        //        dist = newDist;
+        //        closeTarget = player;
+        //    }
+        //}
+        //
+        //return closeTarget;
     }
 }

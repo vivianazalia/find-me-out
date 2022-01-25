@@ -24,7 +24,7 @@ public class GameLobbyPlayerCounter : NetworkBehaviour
         StartCoroutine(StartGame(isStartable));
     }
 
-    private IEnumerator StartGame(bool canStart)
+    public IEnumerator StartGame(bool canStart)
     {
         yield return new WaitForSeconds(1f);
         if (canStart)

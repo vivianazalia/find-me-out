@@ -8573,8 +8573,8 @@ MonoBehaviour:
   offlineScene: Assets/Scenes/Menu/MainMenu.unity
   onlineScene: Assets/Scenes/FBX_MainRoom/LobbyRoom.unity
   transport: {fileID: 1369758511}
-  networkAddress: 10.1.1.4
-  maxConnections: 8
+  networkAddress: 20.102.124.216
+  maxConnections: 5
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 4179241285056887909, guid: c67545186e0d80b4686e9dd483b20057, type: 3}
   autoCreatePlayer: 1
@@ -8584,8 +8584,9 @@ MonoBehaviour:
   - {fileID: 8313614543909279553, guid: 805aa00219c3146449e72bd914a781be, type: 3}
   - {fileID: 815249752110924631, guid: 00f21cae43d559e458da641ca75cfe0f, type: 3}
   - {fileID: 4662870909167855960, guid: d4f8fbbe2a1861b419603987afc0367f, type: 3}
+  - {fileID: 810429714452855573, guid: 91e597211f3e88240a9964abf740ea47, type: 3}
   showRoomGUI: 0
-  minPlayers: 4
+  minPlayers: 5
   roomPlayerPrefab: {fileID: 9038189518402945725, guid: 99ea6ea0b184e2846bc66813973e62b8, type: 3}
   RoomScene: Assets/Scenes/FBX_MainRoom/LobbyRoom.unity
   GameplayScene: Assets/Scenes/FBX_Snow/RoomSnow.unity
@@ -8629,6 +8630,42 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1369758515}
         m_TargetAssemblyTypeName: RoomList, GameAssembly
+        m_MethodName: OnDiscoveredServer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Mirror.Discovery.NetworkDiscoveryHUD, Mirror.Components
+        m_MethodName: OnDiscoveredServer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Mirror.Discovery.NetworkDiscoveryHUD, Mirror.Components
+        m_MethodName: OnDiscoveredServer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Mirror.Discovery.NetworkDiscoveryHUD, Mirror.Components
         m_MethodName: OnDiscoveredServer
         m_Mode: 0
         m_Arguments:

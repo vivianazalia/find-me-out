@@ -23,26 +23,26 @@ public class ObjectFinder : MonoBehaviour
     private void OnDrawGizmos()
     {
         RaycastHit hit;
-        bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+        bool isHit = Physics.Raycast(transform.position, transform.forward, out hit, range);
 
         if (isHit)
         {
             Gizmos.color = Color.red;
-            Debug.DrawRay(transform.position, transform.forward * hit.distance * -1);
-            Debug.Log("hit name obj objectFinder : " + hit.transform.gameObject.name);
+            Debug.DrawRay(transform.position, transform.forward * hit.distance);
+            //Debug.Log("hit name obj objectFinder : " + hit.transform.gameObject.name);
         }
         else
         {
-            Debug.Log("No Hit obj");
+            //Debug.Log("No Hit obj");
             Gizmos.color = Color.green;
-            Debug.DrawRay(transform.position, transform.forward * range * -1);
+            Debug.DrawRay(transform.position, transform.forward * range);
         }
     }
 
     public void AddTarget()
     {
         RaycastHit hit;
-        bool isHit = Physics.Raycast(transform.position, transform.forward * -1, out hit, range);
+        bool isHit = Physics.Raycast(transform.position, transform.forward, out hit, range);
 
         if (isHit)
         {

@@ -11,7 +11,7 @@ public class MenuSettingUI : MonoBehaviour
 
     private void Start()
     {
-        nickname.text = PlayerSettings.nickname;
+        nickname.text = GameSetting.nickname;
     }
 
     public void ChangeNickname()
@@ -23,9 +23,9 @@ public class MenuSettingUI : MonoBehaviour
     {
         if(inputNewNickname.text != "")
         {
-            PlayerSettings.nickname = inputNewNickname.text;
-            PlayerPrefs.SetString(PlayerSettings.playerPrefsNameKey, inputNewNickname.text);
-            nickname.text = PlayerSettings.nickname;
+            GameSetting.nickname = inputNewNickname.text;
+            PlayerPrefs.SetString(GameSetting.playerPrefsNameKey, inputNewNickname.text);
+            nickname.text = GameSetting.nickname;
         }
 
         inputNewNicknamePanel.SetActive(false);

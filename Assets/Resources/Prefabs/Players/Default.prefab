@@ -616,7 +616,8 @@ MonoBehaviour:
   nickname: 
   nicknameText: {fileID: 1767505232853970819}
   playerFinder: {fileID: 3268353170424436593}
-  health: 0
+  objectFinder: {fileID: 0}
+  health: 1
   state: 0
   playerType: 0
 --- !u!143 &8880149264957636364
@@ -678,6 +679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2614368961be3c24185261f3142a9e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &-2080252176312747491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,5 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009884f92ac24714ebc0a1605ff73396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
+  range: 0
+  playerTarget: {fileID: 0}
   objects: []
+  bulletPos: {fileID: 0}

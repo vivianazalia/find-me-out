@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.UI;
 
 public enum PlayerType
 {
@@ -23,6 +24,9 @@ public class InGameCharacterPlayer : MyPlayer
     [SerializeField] private PlayerFinder playerFinder = null;
     [SerializeField] private ObjectFinder objectFinder = null;
 
+    [Header("UI")]
+    [SerializeField] private Image healthSlider = null;
+
     [SyncVar]
     private float bomCooldown;
     public float BomCooldown { get { return bomCooldown; } }
@@ -34,8 +38,7 @@ public class InGameCharacterPlayer : MyPlayer
     public int BulletCount { get { return bulletCount; } }
     [SyncVar]
     public float health;
-    public float Health { get { return health; } }
-
+   
     [SyncVar(hook = nameof(SetIsLose_Hook))]
     public WinLoseState state;
 
@@ -47,13 +50,16 @@ public class InGameCharacterPlayer : MyPlayer
 
     public void SetIsLose_Hook(WinLoseState oldValue, WinLoseState newValue)
     {
-        if (newValue == WinLoseState.winner)
+        if (isLocalPlayer)
         {
-            ShowPanelWin(this.connectionToClient);
-        }
-        else if (newValue == WinLoseState.loser)
-        {
-            ShowPanelLose(this.connectionToClient);
+            if (newValue == WinLoseState.winner)
+            {
+                ShowPanelWin();
+            }
+            else if (newValue == WinLoseState.loser)
+            {
+                ShowPanelLose();
+            }
         }
     }
 
@@ -62,9 +68,7 @@ public class InGameCharacterPlayer : MyPlayer
         base.Start();
         if (hasAuthority)
         {
-            var myRoomPlayer = PlayerRoom.instance;
-            //SetCameraTransform(gameObject);
-            CmdSetPlayerCharacter(myRoomPlayer.nickname);
+            CmdSetPlayerCharacter(GameSetting.nickname);
             SetUI();
         }
 
@@ -75,22 +79,27 @@ public class InGameCharacterPlayer : MyPlayer
         if (playerType == PlayerType.thief)
         {
             GameManager.Instance.AddToThiefList(this);
+            IncreaseThiefCount();
         }
-        //Debug.Log("Health start : " + health);
     }
 
-    [Command(requiresAuthority = false)]
-    public void CmdSetType(PlayerType type)
+    #region Thief Count
+    private void IncreaseThiefCount()
     {
-        //Debug.Log("Playertype sblm : " + playerType + " CmdSetType NetId: " + netId + " CmdSetType " + type);
-        
-        playerType = type;
+        if (isServer)
+        {
+            ThiefCount.instance.thiefCount += 1;
+        }
     }
 
-    public void SetType(PlayerType type)
+    private void DecreaseThiefCount()
     {
-        CmdSetType(type);
+        if (isServer && ThiefCount.instance.thiefCount > 0 && playerType == PlayerType.thief)
+        {
+            ThiefCount.instance.thiefCount -= 1;
+        }
     }
+    #endregion
 
     private void SetUI()
     {
@@ -132,10 +141,12 @@ public class InGameCharacterPlayer : MyPlayer
         }
     }
 
-    [ClientRpc]
-    public void RpcPosition(Vector3 position)
+    public void SetPosition(Vector3 position)
     {
-        transform.position = position;
+        if (isServer)
+        {
+            transform.position = position;
+        }
     }
 
     [Command]
@@ -182,12 +193,15 @@ public class InGameCharacterPlayer : MyPlayer
             if (target.health > 0)
             {
                 target.health -= .2f;
+                ShowUpdateHealthTarget(target);
                 TakeDamage(target.connectionToClient, target.health);
+                UpdateHealthBar(target.health, target);
             }
             else
             {
                 //ghost mode
-                target.CmdDead(target);
+                Debug.Log(target.name + "'s health is " + target.health);
+                target.Dead(); //masih error
                 //masuk ke list thief lose
                 //server cek thief player, if no thief gamestate = over
             }
@@ -211,7 +225,7 @@ public class InGameCharacterPlayer : MyPlayer
     [TargetRpc]
     public void TakeDamage(NetworkConnection conn, float currHealth)
     {
-        Debug.Log(conn.identity.gameObject.name + "'s Health is " + currHealth);
+        //Debug.Log(conn.identity.gameObject.name + "'s Health is " + currHealth);
         InGameUIManager.instance.HealthBar.UpdateHealthBar(currHealth);
     }
 
@@ -220,6 +234,33 @@ public class InGameCharacterPlayer : MyPlayer
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(time);
         anim.SetBool("isAttack", false);
+    }
+
+    [TargetRpc]
+    public void UpdateHealthBar(float currHealth, InGameCharacterPlayer target)
+    {
+        if (target.healthSlider)
+        {
+            Debug.Log("currhealth : " + currHealth);
+            target.healthSlider.fillAmount = currHealth;
+        }
+    }
+
+    [TargetRpc]
+    public void ShowUpdateHealthTarget(InGameCharacterPlayer target)
+    {
+        StartCoroutine(ShowHealthTarget_Coroutine(3f, target));
+    }
+
+    private IEnumerator ShowHealthTarget_Coroutine(float duration, InGameCharacterPlayer target)
+    {
+        if (target.healthSlider)
+        {
+            Debug.Log("Masuk if coroutine");
+            target.healthSlider.gameObject.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            target.healthSlider.gameObject.SetActive(false);
+        }
     }
     #endregion
 
@@ -246,7 +287,6 @@ public class InGameCharacterPlayer : MyPlayer
         NetworkServer.ReplacePlayerForConnection(oldPlayerConn, newPlayer, true);
 
         StartCoroutine(DestroyPlayerDelay(.2f));
-
     }
 
     IEnumerator DestroyPlayerDelay(float delay)
@@ -256,6 +296,11 @@ public class InGameCharacterPlayer : MyPlayer
         if (this.playerType == PlayerType.thief)
         {
             GameManager.Instance.RemoveFromThiefList(this);
+
+            //if (isClient)
+            //{
+            //    CmdRemoveThiefCount();
+            //}
         }
 
         NetworkServer.Destroy(this.gameObject);
@@ -271,7 +316,6 @@ public class InGameCharacterPlayer : MyPlayer
             if (target != null)
             {
                 ReplacePlayer(index);
-                CmdSetType(PlayerType.thief);
                 Debug.Log("Success Hide");
             }
         }
@@ -303,6 +347,7 @@ public class InGameCharacterPlayer : MyPlayer
         }
     }
 
+    [Command]
     public void ChangeToThief()
     {
         if (gameObject != NetworkManager.singleton.spawnPrefabs[2])
@@ -315,36 +360,55 @@ public class InGameCharacterPlayer : MyPlayer
 
     #region Dead
     [ClientRpc]
-    public void RpcDead(InGameCharacterPlayer player)
+    public void RpcDead()
     {
-        player.nicknameText.color = Color.red;
+        if (nicknameText)
+        {
+            nicknameText.color = Color.red;
+        }
+        
         //player.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
         //player.playerFinder.GetComponent<CircleCollider2D>().enabled = false;
         //player.GetComponent<BoxCollider2D>().enabled = false;
-        player.playerType = PlayerType.viewer;
-        GameManager.Instance.RemoveFromThiefList(player);
+        //playerType = PlayerType.viewer;
+        GameManager.Instance.RemoveFromThiefList(this);
+
+        //ThiefCount.instance.UpdateThiefCount();
     }
 
-    [Command(requiresAuthority = false)]
-    public void CmdDead(InGameCharacterPlayer player)
+    public void Dead()
     {
-        RpcDead(player);
+        DecreaseThiefCount();
+        playerType = PlayerType.viewer;
+
+        //ThiefCount.instance.UpdateThiefCount();
+        //CmdUpdateThiefCount();
+        RpcDead();
     }
     #endregion
 
     #region Win Lose
-    [TargetRpc]
-    public void ShowPanelWin(NetworkConnection conn)
+    //[TargetRpc]
+    public void ShowPanelWin()
     {
-        Debug.Log(conn.identity.name + " Win!");
+        //Debug.Log(conn.identity.name + " Win!");
         InGameUIManager.instance.ShowPanelWin();
     }
 
-    [TargetRpc]
-    public void ShowPanelLose(NetworkConnection conn)
+    //[TargetRpc]
+    public void ShowPanelLose()
     {
-        Debug.Log(conn.identity.name + " Lose!");
+        //Debug.Log(conn.identity.name + " Lose!");
         InGameUIManager.instance.ShowPanelLose();
     }
     #endregion
+
+    private void OnDestroy()
+    {
+        if(playerType == PlayerType.thief)
+        {
+            DecreaseThiefCount();
+        }
+        
+    }
 }

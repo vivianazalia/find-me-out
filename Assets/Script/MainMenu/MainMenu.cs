@@ -30,13 +30,13 @@ public class MainMenu : MonoBehaviour
             networkDiscovery = networkManager.GetComponent<NetworkDiscovery>();
         }
 
-        if (!PlayerPrefs.HasKey(PlayerSettings.firstRunAppKey))
+        if (!PlayerPrefs.HasKey(GameSetting.firstRunAppKey))
         {
             inputNickname.SetActive(true);
         }
         else
         {
-            PlayerSettings.nickname = PlayerPrefs.GetString(PlayerSettings.playerPrefsNameKey);
+            GameSetting.nickname = PlayerPrefs.GetString(GameSetting.playerPrefsNameKey);
             panelMainMenu.SetActive(true);
         }
     }

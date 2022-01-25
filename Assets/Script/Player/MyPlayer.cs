@@ -20,6 +20,9 @@ public class MyPlayer : NetworkBehaviour
 
     public void SetNickname_Hook(string oldValue, string newValue)
     {
-        nicknameText.text = newValue;
+        if (nicknameText)
+        {
+            nicknameText.text = newValue;
+        }
     }
 }

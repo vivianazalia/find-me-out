@@ -20,11 +20,11 @@ public class PlayerInputName : MonoBehaviour
     {
         if(nameInputField.text != "")
         {
-            PlayerSettings.nickname = nameInputField.text;
-            PlayerPrefs.SetString(PlayerSettings.playerPrefsNameKey, PlayerSettings.nickname);
+            GameSetting.nickname = nameInputField.text;
+            PlayerPrefs.SetString(GameSetting.playerPrefsNameKey, GameSetting.nickname);
             gameObject.SetActive(false);
             panelMenu.SetActive(true);
-            PlayerPrefs.SetInt(PlayerSettings.firstRunAppKey, 1);
+            PlayerPrefs.SetInt(GameSetting.firstRunAppKey, 1);
         }
     }
 }

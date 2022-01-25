@@ -22,8 +22,39 @@ public class ThiefCount : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+        var manager = NetworkManager.singleton as NetworkManagerLobby;
+        int policeCount = manager.policeCount;
+        int maxConn = manager.maxConnections;
+        thiefCount = maxConn - policeCount;
+    }
+
     public void UpdateThiefCountText_Hook(int oldValue, int newValue)
     {
         thiefCountText.text = "Thief Remains : " + newValue;
+    }
+
+    public void UpdateThiefCount()
+    {
+        thiefCount = 0;
+
+        var players = FindObjectsOfType<InGameCharacterPlayer>();
+
+        foreach(var p in players)
+        {
+            if(p.playerType == PlayerType.thief)
+            {
+                thiefCount += 1; 
+            }
+        }
+
+        //RpcUpdateTextThiefCount();
+        thiefCountText.text = "Thief Remains : " + thiefCount.ToString();
+    }
+
+    public void UpdateTextThiefCount()
+    {
+        thiefCountText.text = "Thief Remains : " + thiefCount.ToString();
     }
 }

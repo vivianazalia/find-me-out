@@ -35,7 +35,7 @@ public class PlayerRoom : NetworkRoomPlayer
 
         if (isLocalPlayer)
         {
-            CmdSetNickname(PlayerSettings.nickname);
+            CmdSetNickname(GameSetting.nickname);
         }
 
         LobbyUI.instance.GameLobbyPlayerCounter.UpdatePlayerCount();
@@ -54,7 +54,6 @@ public class PlayerRoom : NetworkRoomPlayer
     public void CmdSetNickname(string nick)
     {
         nickname = nick;
-        //lobbyPlayerMovement.nickname = nick;
     }
 
     private void OnDestroy()

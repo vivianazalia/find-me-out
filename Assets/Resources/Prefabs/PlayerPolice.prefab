@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 1
-  targets: []
+  playerTarget: {fileID: 0}
   objects: []
   bulletPos: {fileID: 1940333227506729205}
 --- !u!1 &6459976077582708891
@@ -1364,7 +1364,7 @@ Transform:
   m_GameObject: {fileID: 7484472736795886538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: -0.1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children:
   - {fileID: 8748361449504308638}
   - {fileID: 8724649985108416891}
@@ -1704,6 +1704,7 @@ MonoBehaviour:
   nicknameText: {fileID: 5091008387999682604}
   playerFinder: {fileID: 8680057926491699417}
   objectFinder: {fileID: 0}
+  healthSlider: {fileID: 0}
   health: 0
   state: 0
   playerType: 2

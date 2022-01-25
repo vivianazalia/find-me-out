@@ -12,9 +12,9 @@ public class PlayerSettings : MonoBehaviour
     [SerializeField] float _gravityValue = -9.0f;
     [SerializeField] float _jumpHeight = 9.0f;
 
-    public static string nickname;
-    public static string playerPrefsNameKey = "PlayerName";
-    public static string firstRunAppKey = "FirstRunApp";
+    //public static string nickname;
+    //public static string playerPrefsNameKey = "PlayerName";
+    //public static string firstRunAppKey = "FirstRunApp";
 
     [SerializeField] PlayerRole role = PlayerRole.Unassigned;
 

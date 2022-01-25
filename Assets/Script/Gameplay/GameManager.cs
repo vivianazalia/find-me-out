@@ -57,7 +57,11 @@ public class GameManager : NetworkBehaviour
         if (!thiefs.Contains(thief))
         {
             thiefs.Add(thief);
-            ThiefCount.instance.thiefCount += 1;
+
+            //if (isClient)
+            //{
+            //    CmdAddThiefCount();
+            //}
         }
     }
 
@@ -67,7 +71,11 @@ public class GameManager : NetworkBehaviour
         {
             Debug.Log("Masuk remove list from player");
             thiefs.Remove(thief);
-            ThiefCount.instance.thiefCount -= 1;
+
+            //if (isClient)
+            //{
+            //    CmdRemoveThiefCount();
+            //} 
         }
         CheckGameOver();
     }
@@ -121,8 +129,8 @@ public class GameManager : NetworkBehaviour
             var player = players[Random.Range(0, players.Count)];
             if (player.playerType != PlayerType.police)
             {
-                player.playerType = PlayerType.police;
-                //player.SetType(PlayerType.police);
+                //player.playerType = PlayerType.police;
+                SetPlayerType(player, PlayerType.police);
             }
             else
             {
@@ -140,7 +148,8 @@ public class GameManager : NetworkBehaviour
             {
                 //player.playerType = PlayerType.police;
                 //players[i].SetType(PlayerType.thief);
-                players[i].playerType = PlayerType.thief;
+                //players[i].playerType = PlayerType.thief;
+                SetPlayerType(players[i], PlayerType.thief);
             }
         }
     }
@@ -152,12 +161,12 @@ public class GameManager : NetworkBehaviour
             if (players[i].playerType == PlayerType.police)
             {
                 Vector3 pos = policeSpawnPos.GetSpawnPosition();
-                players[i].RpcPosition(pos);
+                players[i].SetPosition(pos);
             }
             else if (players[i].playerType == PlayerType.thief)
             {
                 Vector3 pos = thiefSpawnPos.GetSpawnPosition();
-                players[i].RpcPosition(pos);
+                players[i].SetPosition(pos);
             }
         }
     }
@@ -169,12 +178,12 @@ public class GameManager : NetworkBehaviour
             if (player.playerType == PlayerType.thief)
             {
                 player.ReplacePlayer(2);
-                player.SetType(PlayerType.thief);
+                //player.SetType(PlayerType.thief);
             }
             else if (player.playerType == PlayerType.police)
             {
                 player.ReplacePlayer(1);
-                player.SetType(PlayerType.police);
+                //player.SetType(PlayerType.police);
             }
         }
     }
@@ -226,13 +235,14 @@ public class GameManager : NetworkBehaviour
             if (gameplayDuration > 0)
             {
                 gameplayDuration -= Time.deltaTime;
+                //Debug.Log("Gameplay dur : " + gameplayDuration + " gamestate : " + gameState);
             }
             else
             {
                 gameState = GameState.Over;
                 //display panel win lose
             }
-        }
+        } 
 
         Timer();
 
@@ -243,22 +253,24 @@ public class GameManager : NetworkBehaviour
 
     public void CheckGameOver()
     {
-        if (gameState == GameState.Start && thiefs.Count == 0 && ThiefCount.instance.thiefCount == 0)
+        if (gameState == GameState.Start && ThiefCount.instance.thiefCount == 0)
         {
+            gameState = GameState.Over;
+          
             //polisi menang
             foreach (var p in players)
             {
                 if (p.playerType == PlayerType.police)
                 {
-                    p.state = WinLoseState.winner;
+                    //p.state = WinLoseState.winner;
+                    SetWinLosePlayer(p, WinLoseState.winner);
                 }
                 else
                 {
-                    p.state = WinLoseState.loser;
+                    //p.state = WinLoseState.loser;
+                    SetWinLosePlayer(p, WinLoseState.loser);
                 }
             }
-
-            gameState = GameState.Over;
         }
         else if (gameState == GameState.Over && ThiefCount.instance.thiefCount > 0)
         {
@@ -267,13 +279,31 @@ public class GameManager : NetworkBehaviour
             {
                 if (p.playerType == PlayerType.police)
                 {
-                    p.state = WinLoseState.loser;
+                    //p.state = WinLoseState.loser;
+                    SetWinLosePlayer(p, WinLoseState.loser);
                 }
                 else
                 {
-                    p.state = WinLoseState.winner;
+                    //p.state = WinLoseState.winner;
+                    SetWinLosePlayer(p, WinLoseState.winner);
                 }
             }
+        }
+    }
+
+    private void SetWinLosePlayer(InGameCharacterPlayer player, WinLoseState state)
+    {
+        if (isServer)
+        {
+            player.state = state;
+        }
+    }
+
+    private void SetPlayerType(InGameCharacterPlayer player, PlayerType type)
+    {
+        if (isServer)
+        {
+            player.playerType = type;
         }
     }
 

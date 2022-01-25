@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using Mirror;
-using Mirror.Discovery;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Testing 
 {
@@ -27,8 +28,24 @@ public class Testing
         menu.CreateRoom();
         yield return new WaitForSeconds(1f);
 
-        var nextScene = NetworkManager.singleton.onlineScene;
+        var nextScene = manager.onlineScene; //NetworkManager.singleton.onlineScene;
 
         Assert.AreNotEqual(nextScene, currentScene);
     }
+
+    //[Test]
+    //public void ClickSettingButton()
+    //{
+    //    var settingBtn = GameObject.Find("LobbyCanvas").transform.Find("Setting");
+    //
+    //    Assert.IsNotNull(settingBtn);
+    //
+    //    EventSystem.current.SetSelectedGameObject(settingBtn.gameObject);
+    //
+    //    settingBtn.GetComponent<Button>().onClick.Invoke();
+    //    //var chara = GameObject.FindObjectOfType<LobbyPlayerMovement>();
+    //    //Assert.IsNotNull(chara);
+    //    //Debug.Log("Name : " + chara.name);
+    //    
+    //}
 }

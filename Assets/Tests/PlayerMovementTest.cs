@@ -2,23 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovementTest
 {
-    [Test]
-    public void PlayerMovementTesting()
+    [SetUp]
+    public void Setup()
     {
-        GameObject player = (GameObject)Object.Instantiate(Resources.Load("./PlayerPolice"));
-        PlayerMovement movement = player.GetComponent<PlayerMovement>();
-
-        InputManager inputManager = movement.GetComponent<InputManager>();
-        Vector3 pos = player.transform.position;
-
-        movement.Tick();
-
-        Vector3 currPos = player.transform.position;
-
-        Assert.AreNotEqual(pos, currPos);
+        SceneManager.LoadScene("RoomSnow");
     }
+
+    [Test]
+    public void PlayerFinderTest()
+    {
+
+    }
+
+    //[UnityTest]
+    //public IEnumerator MoveTest()
+    //{
+    //    var obj = Resources.Load("Prefabs/PlayerParticipant");
+    //    var player = Object.Instantiate(obj) as GameObject;
+    //    var currPos = player.transform.position;
+    //    var movement = player.GetComponent<PlayerMovement>();
+    //
+    //    var input = player.GetComponent<InputManager>();
+    //    Vector3 newPos = input.LeftStickInput + new Vector2(1, 1);
+    //
+    //    movement.Tick();
+    //    yield return new WaitForSeconds(.2f);
+    //    var nextPos = currPos + newPos;
+    //
+    //    Assert.AreNotEqual(currPos, nextPos);
+    //    
+    //}
 }
